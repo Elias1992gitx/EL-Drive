@@ -87,6 +87,12 @@ export default function ActionButtons() {
       label: 'Get Signatures',
       icon: PencilSquareIcon,
       onClick: () => setIsGetSignatureOpen(true)
+    },
+    {
+      label: 'Sign Yourself',
+      icon: UserIcon,
+      onClick: () => setIsSignYourselfOpen(true),
+      border: true
     }
   ]
 
@@ -118,19 +124,24 @@ export default function ActionButtons() {
                   leaveTo="opacity-0 scale-95"
                 >
                   <Menu.Items className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 p-1.5">
-                    {actionButtons.slice(2).map((button) => (
+                    {actionButtons.slice(2).map((button, index) => (
                       <Menu.Item key={button.label}>
                         {({ active }) => (
-                          <button
-                            onClick={button.onClick}
-                            className={`
-                              ${active ? 'bg-gray-50' : ''}
-                              flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 rounded-lg
-                            `}
-                          >
-                            <button.icon className="h-4 w-4" />
-                            {button.label}
-                          </button>
+                          <>
+                            {button.border && index !== 0 && (
+                              <div className="my-1 border-t border-gray-100" />
+                            )}
+                            <button
+                              onClick={button.onClick}
+                              className={`
+                                ${active ? 'bg-gray-50' : ''}
+                                flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 rounded-lg
+                              `}
+                            >
+                              <button.icon className="h-4 w-4" />
+                              {button.label}
+                            </button>
+                          </>
                         )}
                       </Menu.Item>
                     ))}
@@ -140,12 +151,99 @@ export default function ActionButtons() {
             </motion.div>
           ) : (
             // Tablet/Desktop View - Show all buttons
-            actionButtons.map((button) => (
-              <ActionButton key={button.label} {...button} />
-            ))
+            <div className="flex items-center gap-2">
+              {actionButtons.map((button, index) => (
+                <Fragment key={button.label}>
+                  {button.border && index !== 0 && (
+                    <div className="h-8 w-px bg-gray-200" />
+                  )}
+                  <ActionButton 
+                    {...button} 
+                    buttonRef={button.label === 'Create' ? createButtonRef : undefined}
+                  />
+                </Fragment>
+              ))}
+            </div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Add Dialogs */}
+      <CreateFolderDialog 
+        isOpen={isCreateFolderOpen} 
+        onClose={() => setIsCreateFolderOpen(false)} 
+      />
+      <EditPDFDialog 
+        isOpen={isEditPDFOpen} 
+        onClose={() => setIsEditPDFOpen(false)} 
+      />
+      <GetSignatureDialog 
+        isOpen={isGetSignatureOpen} 
+        onClose={() => setIsGetSignatureOpen(false)} 
+      />
+      <SignYourselfDialog 
+        isOpen={isSignYourselfOpen} 
+        onClose={() => setIsSignYourselfOpen(false)} 
+      />
+      <CreateMenu
+        isOpen={isCreateMenuOpen}
+        onClose={() => setIsCreateMenuOpen(false)}
+        anchorRef={createButtonRef}
+      />
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        multiple
+        onChange={(e) => {
+          if (e.target.files) {
+            handleFiles(e.target.files)
+          }
+        }}
+      />
+      <Dialog
+        open={isUploadDialogOpen}
+        onClose={() => setIsUploadDialogOpen(false)}
+        className="fixed inset-0 z-50 overflow-y-auto"
+      >
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
+          
+          <Dialog.Panel className="relative bg-white rounded-xl shadow-2xl w-[500px] p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-gray-900">Upload Files</h3>
+              <button
+                onClick={() => setIsUploadDialogOpen(false)}
+                className="p-2 rounded-full hover:bg-gray-100"
+              >
+                <XMarkIcon className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+            
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`
+                border-2 border-dashed rounded-xl p-8
+                flex flex-col items-center justify-center gap-4
+                ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}
+              `}
+            >
+              <CloudArrowUpIcon className="h-12 w-12 text-gray-400" />
+              <div className="text-center">
+                <p className="text-gray-600">Drag and drop your files here, or</p>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="text-blue-500 hover:text-blue-600 font-medium"
+                >
+                  browse files
+                </button>
+              </div>
+            </div>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
     </div>
   )
 }
@@ -156,16 +254,19 @@ function ActionButton({
   icon: Icon, 
   onClick, 
   primary,
-  isMobile 
+  isMobile,
+  buttonRef 
 }: {
-  label: string
-  icon: any
-  onClick: () => void
-  primary?: boolean
-  isMobile?: boolean
+  label: string;
+  icon: any;
+  onClick: () => void;
+  primary?: boolean;
+  isMobile?: boolean;
+  buttonRef?: React.RefObject<HTMLButtonElement>;
 }) {
   return (
     <motion.button
+      ref={buttonRef}
       onClick={onClick}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -182,5 +283,5 @@ function ActionButton({
       <Icon className="h-4 w-4" />
       <span className={isMobile ? 'hidden' : 'hidden sm:inline'}>{label}</span>
     </motion.button>
-  )
+  );
 }

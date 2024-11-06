@@ -62,8 +62,8 @@ export default function SubMenu({ type, position, onSelect }: SubMenuProps) {
         exit={{ opacity: 0, x: -10 }}
         style={{
           position: 'fixed',
-          top: position.top,
-          left: position.left,
+          top: Math.min(position.top - 8, window.innerHeight - 320),
+          left: position.left - 2,
         }}
         className="w-64 bg-white rounded-r-lg shadow-xl border-t border-r border-b border-gray-200 py-2 z-50"
       >

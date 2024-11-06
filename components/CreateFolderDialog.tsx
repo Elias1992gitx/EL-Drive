@@ -1,3 +1,5 @@
+'use client'
+
 import { Dialog } from '@headlessui/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
@@ -8,7 +10,10 @@ interface CreateFolderDialogProps {
   onClose: () => void
 }
 
-export default function CreateFolderDialog({ isOpen, onClose }: CreateFolderDialogProps) {
+export default function CreateFolderDialog({
+  isOpen,
+  onClose,
+}: CreateFolderDialogProps) {
   const [folderName, setFolderName] = useState('')
   const [addAutomation, setAddAutomation] = useState(false)
 
@@ -32,7 +37,7 @@ export default function CreateFolderDialog({ isOpen, onClose }: CreateFolderDial
           onClose={onClose}
           className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center"
         >
-          <motion.div 
+          <motion.div
             className="fixed inset-0 bg-black/20 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,7 +57,7 @@ export default function CreateFolderDialog({ isOpen, onClose }: CreateFolderDial
                 <motion.div
                   initial={{ rotate: -15, scale: 0.8 }}
                   animate={{ rotate: 0, scale: 1 }}
-                  transition={{ type: "spring", bounce: 0.5 }}
+                  transition={{ type: 'spring', bounce: 0.5 }}
                 >
                   <FolderIcon className="h-8 w-8 text-blue-500" />
                 </motion.div>
@@ -103,7 +108,8 @@ export default function CreateFolderDialog({ isOpen, onClose }: CreateFolderDial
                       Add automation
                     </p>
                     <p className="text-sm text-gray-500">
-                      Set up this folder to automatically handle tasks like organizing your content and converting files.
+                      Set up this folder to automatically handle tasks like
+                      organizing your content and converting files.
                     </p>
                   </div>
                 </label>

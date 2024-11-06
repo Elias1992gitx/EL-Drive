@@ -45,7 +45,8 @@ export default function Header() {
     <header 
       className={`fixed top-0 w-full z-50 transition-all duration-200 
         ${isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-white'}
-        border-b border-gray-100`}
+        after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 
+        after:h-[1px] after:bg-gradient-to-r after:from-transparent after:via-gray-200 after:to-transparent`}
     >
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
@@ -133,27 +134,32 @@ export default function Header() {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-xl shadow-lg border border-gray-100 focus:outline-none overflow-hidden">
+                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-xl 
+                  shadow-lg ring-1 ring-black/5 focus:outline-none divide-y divide-gray-50">
                   <div className="p-2">
                     <Menu.Item>
                       {({ active }) => (
                         <button
                           className={`${
                             active ? 'bg-gray-50' : ''
-                          } flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 rounded-lg transition-colors`}
+                          } flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 rounded-lg 
+                          transition-colors hover:bg-gray-50/80`}
                         >
                           <Cog6ToothIcon className="h-4 w-4" />
                           Settings
                         </button>
                       )}
                     </Menu.Item>
+                  </div>
+                  <div className="p-2">
                     <Menu.Item>
                       {({ active }) => (
                         <button
                           onClick={() => signOut()}
                           className={`${
                             active ? 'bg-gray-50' : ''
-                          } flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 rounded-lg transition-colors`}
+                          } flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 rounded-lg 
+                          transition-colors hover:bg-gray-50/80`}
                         >
                           <ArrowRightOnRectangleIcon className="h-4 w-4" />
                           Sign out

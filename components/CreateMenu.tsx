@@ -1,3 +1,5 @@
+'use client'
+
 import { Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -18,7 +20,7 @@ import SubMenu from './SubMenu'
 interface CreateMenuProps {
   isOpen: boolean
   onClose: () => void
-  anchorEl: HTMLElement | null
+  anchorRef: React.RefObject<HTMLButtonElement>
 }
 
 const menuItems = [
@@ -43,11 +45,15 @@ const menuItems = [
   }
 ]
 
-export default function CreateMenu({ isOpen, onClose, anchorEl }: CreateMenuProps) {
+export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuProps) {
   const [activeSubmenu, setActiveSubmenu] = useState<{
     type: string;
     position: { top: number; left: number };
   } | null>(null)
+
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false)
 
   const handleItemClick = (item: any) => {
     if (!item.hasSubmenu) {
@@ -62,7 +68,7 @@ export default function CreateMenu({ isOpen, onClose, anchorEl }: CreateMenuProp
         type: item.label.toLowerCase(),
         position: {
           top: rect.top,
-          left: rect.right - 2,
+          left: rect.right + 2,
         }
       })
     } else {
@@ -77,8 +83,25 @@ export default function CreateMenu({ isOpen, onClose, anchorEl }: CreateMenuProp
     }
   }
 
-  if (!anchorEl) return null
-  const rect = anchorEl.getBoundingClientRect()
+  const handleFiles = async (files: FileList) => {
+    setIsUploading(true)
+    setUploadError(null)
+    
+    try {
+      // Handle the uploaded files here
+      console.log('Files:', Array.from(files))
+      // Add your file upload logic here
+      
+      setIsUploadDialogOpen(false)
+    } catch (error) {
+      setUploadError(error instanceof Error ? error.message : 'Error uploading files')
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  if (!anchorRef.current) return null
+  const rect = anchorRef.current.getBoundingClientRect()
 
   return (
     <AnimatePresence>
@@ -100,7 +123,7 @@ export default function CreateMenu({ isOpen, onClose, anchorEl }: CreateMenuProp
               transition={{ duration: 0.1 }}
               style={{
                 position: 'fixed',
-                top: rect.bottom + 8,
+                top: rect.bottom + 4,
                 left: rect.left,
                 zIndex: 50,
               }}
