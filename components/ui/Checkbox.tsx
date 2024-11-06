@@ -15,7 +15,7 @@ export function Checkbox({ checked, onChange, label }: CheckboxProps) {
         initial={false}
         animate={checked ? "checked" : "unchecked"}
         onClick={onChange}
-        className={`w-5 h-5 rounded border transition-colors
+        className={`w-7 h-7 rounded border transition-colors
           ${checked 
             ? 'bg-blue-500 border-blue-500' 
             : 'border-gray-300 dark:border-gray-600 hover:border-blue-500'

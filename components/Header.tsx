@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, Transition } from '@headlessui/react'
 import { 
@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { UserButton } from "@clerk/nextjs";
 import { useSidebar } from '@/contexts/SidebarContext';
+import InviteMemberDialog from './InviteMemberDialog';
 
 const actionButtons = [
   { icon: PlusIcon, label: 'Create', primary: true },
@@ -65,6 +66,7 @@ const menuItemVariants = {
 
 export default function Header() {
   const { isExpanded } = useSidebar()
+  const [isInviteOpen, setIsInviteOpen] = useState(false)
 
   return (
     <header 
@@ -91,7 +93,11 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded-lg hover:bg-gray-50">
+          <button 
+            onClick={() => setIsInviteOpen(true)}
+            className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 
+                     px-3 py-1.5 rounded-lg hover:bg-gray-50"
+          >
             <UserPlusIcon className="h-4 w-4" />
             Invite members
           </button>
@@ -101,6 +107,10 @@ export default function Header() {
           <UserButton />
         </div>
       </div>
+      <InviteMemberDialog 
+        isOpen={isInviteOpen}
+        onClose={() => setIsInviteOpen(false)}
+      />
     </header>
   )
 } 
