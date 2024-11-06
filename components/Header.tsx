@@ -20,13 +20,58 @@ const actionButtons = [
   { icon: UserPlusIcon, label: 'Sign yourself' }
 ]
 
+const sidebarVariants = {
+  expanded: {
+    width: "16rem",
+    transition: {
+      type: "spring",
+      stiffness: 200,
+      damping: 25
+    }
+  },
+  collapsed: {
+    width: "3rem",
+    transition: {
+      type: "spring",
+      stiffness: 200,
+      damping: 25
+    }
+  }
+};
+
+const iconVariants = {
+  expanded: { rotate: 0 },
+  collapsed: { rotate: 180 }
+};
+
+const menuItemVariants = {
+  expanded: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut"
+    }
+  },
+  collapsed: {
+    opacity: 0,
+    x: -10,
+    transition: {
+      duration: 0.2,
+      ease: "easeIn"
+    }
+  }
+};
+
 export default function Header() {
   const { isExpanded } = useSidebar()
 
   return (
-    <header className={`fixed top-0 h-14 bg-white border-b border-gray-100 z-50 transition-all duration-300
-      ${isExpanded ? 'left-[304px]' : 'left-12'} right-0 w-auto`}>
-      <div className="flex items-center justify-between h-full px-4 max-w-full">
+    <header 
+      className={`fixed top-0 h-14 bg-white border-b border-gray-100 z-50 transition-all duration-200 ease-in-out
+        ${isExpanded ? 'left-56' : 'left-10'} right-0`}
+    >
+      <div className="h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Menu as="div" className="relative">
             

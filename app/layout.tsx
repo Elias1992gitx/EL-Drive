@@ -19,14 +19,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
       </head>
       <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}>
         <ClerkProvider>
           <SidebarProvider>
             {isAuthPage ? (
               <div className="min-h-screen grid place-items-center">
-                <div className="w-full max-w-md p-4">
+                <div className="w-full max-w-md p-4 place-items-center">
                   {children}
                 </div>
               </div>

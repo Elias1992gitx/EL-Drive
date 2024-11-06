@@ -26,14 +26,14 @@ export default function Home() {
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className={`flex-1 min-w-0 pt-14 transition-all duration-300
-          ${isExpanded ? 'ml-[304px]' : 'ml-12'}`}>
-          <div className="w-full h-full max-w-[1920px] mx-auto px-4">
+        <main 
+          className={`flex-1 min-w-0 transition-all duration-300 ease-out pt-14
+            ${isExpanded ? 'ml-56' : 'ml-10'}`}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ActionButtons />
             <SuggestedActivity />
-            <div className="px-4 py-4">
-              <FileGrid />
-            </div>
+            <FileGrid />
           </div>
         </main>
       </div>
