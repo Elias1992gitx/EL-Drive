@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Responsive breakpoint utilities */
+@layer utilities {
+  .responsive-container {
+    @apply max-w-[90%] sm:max-w-[85%] md:max-w-[80%] lg:max-w-7xl mx-auto;
+  }
+  
+  .responsive-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4;
+  }
+}
+
+/* Enhanced mobile menu styles */
+.mobile-menu {
+  @apply fixed inset-0 z-50 bg-white dark:bg-gray-900 lg:relative lg:bg-transparent;
+}
+
+/* Improved touch targets for mobile */
+.touch-target {
+  @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+}
+
+/* Responsive typography */
+.responsive-text {
+  @apply text-sm sm:text-base lg:text-lg;
+}
+
+/* Rest of your existing CSS */
+
 :root {
   --background: #ffffff;
   --foreground: #000000;

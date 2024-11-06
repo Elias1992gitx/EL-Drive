@@ -1,116 +1,194 @@
 'use client'
 
-import { Fragment, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useRef, useEffect, Fragment } from 'react'
+import { useAuth, useUser } from '@clerk/nextjs'
 import { Menu, Transition } from '@headlessui/react'
 import { 
-  MagnifyingGlassIcon, PlusIcon, UserPlusIcon, ChevronDownIcon,
-  ArrowUpTrayIcon, FolderPlusIcon, DocumentTextIcon, PencilSquareIcon,
-  BellIcon, QuestionMarkCircleIcon
+  MagnifyingGlassIcon,
+  Bars3Icon,
+  XMarkIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+  BellIcon
 } from '@heroicons/react/24/outline'
-import { UserButton } from "@clerk/nextjs";
-import { useSidebar } from '@/contexts/SidebarContext';
-import InviteMemberDialog from './InviteMemberDialog';
-
-const actionButtons = [
-  { icon: PlusIcon, label: 'Create', primary: true },
-  { icon: ArrowUpTrayIcon, label: 'Upload or drop', border: true },
-  { icon: FolderPlusIcon, label: 'Create folder' },
-  { icon: DocumentTextIcon, label: 'Edit PDF' },
-  { icon: PencilSquareIcon, label: 'Get signatures' },
-  { icon: UserPlusIcon, label: 'Sign yourself' }
-]
-
-const sidebarVariants = {
-  expanded: {
-    width: "16rem",
-    transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 25
-    }
-  },
-  collapsed: {
-    width: "3rem",
-    transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 25
-    }
-  }
-};
-
-const iconVariants = {
-  expanded: { rotate: 0 },
-  collapsed: { rotate: 180 }
-};
-
-const menuItemVariants = {
-  expanded: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut"
-    }
-  },
-  collapsed: {
-    opacity: 0,
-    x: -10,
-    transition: {
-      duration: 0.2,
-      ease: "easeIn"
-    }
-  }
-};
+import { motion, AnimatePresence } from 'framer-motion'
+import { useSidebar } from '@/contexts/SidebarContext'
 
 export default function Header() {
+  const [isSearchFocused, setIsSearchFocused] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const { signOut } = useAuth()
+  const { user, isLoaded } = useUser()
   const { isExpanded } = useSidebar()
-  const [isInviteOpen, setIsInviteOpen] = useState(false)
+
+  // Calculate dynamic max-width based on sidebar state
+  const getSearchMaxWidth = () => {
+    return isExpanded ? 'max-w-xl' : 'max-w-3xl'
+  }
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  if (!isLoaded) {
+    return null // Or a loading spinner
+  }
 
   return (
     <header 
-      className={`fixed top-0 h-14 bg-white border-b border-gray-100 z-50 transition-all duration-200 ease-in-out
-        ${isExpanded ? 'left-56' : 'left-10'} right-0`}
+      className={`fixed top-0 w-full z-50 transition-all duration-200 
+        ${isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-white'}
+        border-b border-gray-100`}
     >
-      <div className="h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Menu as="div" className="relative">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between gap-4">
+          {/* Left Section */}
+          <div className="flex items-center gap-4">
+            <button 
+              className="lg:hidden -ml-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <motion.div
+                animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isMobileMenuOpen ? (
+                  <XMarkIcon className="h-6 w-6" />
+                ) : (
+                  <Bars3Icon className="h-6 w-6" />
+                )}
+              </motion.div>
+            </button>
             
-          </Menu>
-        </div>
+            {/* Logo - visible on mobile */}
+            <div className="lg:hidden">
+              <img src="/ELST.svg" alt="ELST Logo" className="h-8 w-auto" />
+            </div>
+          </div>
 
-        <div className="flex-1 max-w-2xl mx-8">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 
-                       rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
-            />
-            <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+          {/* Search Bar - Center with dynamic width */}
+          <motion.div 
+            className={`
+              flex-1 hidden lg:block
+              ${isSearchFocused ? 'z-30' : ''}
+              transition-all duration-300 ease-in-out
+            `}
+            animate={{
+              maxWidth: isExpanded ? '32rem' : '48rem',
+              marginLeft: isExpanded ? '16rem' : '4rem'
+            }}
+          >
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="Search files and folders..."
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
+                className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 
+                         rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20
+                         transition-all duration-200 hover:bg-gray-100 focus:bg-white"
+              />
+              <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+            </div>
+          </motion.div>
+
+          {/* Right Actions */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Notifications */}
+            <button className="p-2 rounded-full hover:bg-gray-100 transition-colors relative">
+              <BellIcon className="h-6 w-6 text-gray-600" />
+              <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
+            </button>
+
+            {/* User Profile Dropdown */}
+            <Menu as="div" className="relative">
+              <Menu.Button className="flex items-center gap-2 p-1.5 rounded-full hover:bg-gray-100 transition-colors">
+                {user?.imageUrl ? (
+                  <img 
+                    src={user.imageUrl} 
+                    alt="Profile" 
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
+                  />
+                ) : (
+                  <UserCircleIcon className="h-8 w-8 text-gray-400" />
+                )}
+                <span className="hidden sm:block text-sm font-medium text-gray-700">
+                  {user?.fullName || 'User'}
+                </span>
+              </Menu.Button>
+
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-xl shadow-lg border border-gray-100 focus:outline-none overflow-hidden">
+                  <div className="p-2">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active ? 'bg-gray-50' : ''
+                          } flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 rounded-lg transition-colors`}
+                        >
+                          <Cog6ToothIcon className="h-4 w-4" />
+                          Settings
+                        </button>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          onClick={() => signOut()}
+                          className={`${
+                            active ? 'bg-gray-50' : ''
+                          } flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 rounded-lg transition-colors`}
+                        >
+                          <ArrowRightOnRectangleIcon className="h-4 w-4" />
+                          Sign out
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={() => setIsInviteOpen(true)}
-            className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 
-                     px-3 py-1.5 rounded-lg hover:bg-gray-50"
-          >
-            <UserPlusIcon className="h-4 w-4" />
-            Invite members
-          </button>
-          <button className="p-2 rounded-lg hover:bg-gray-50">
-            <QuestionMarkCircleIcon className="h-4 w-4 text-gray-500" />
-          </button>
-          <UserButton />
-        </div>
+        {/* Mobile Search - Shown when menu is open */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="lg:hidden pb-4"
+            >
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 
+                           rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                />
+                <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-      <InviteMemberDialog 
-        isOpen={isInviteOpen}
-        onClose={() => setIsInviteOpen(false)}
-      />
     </header>
   )
 } 
