@@ -1,10 +1,10 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useAnimation } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { Message } from '@/lib/types'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Send, Sparkles, X } from 'lucide-react'
 
 interface ChatBotProps {
   isOpen: boolean
@@ -21,6 +21,7 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const controls = useAnimation()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -57,11 +58,12 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
         body: JSON.stringify({ message: input }),
       })
 
+      const data = await res.json()
+
       if (!res.ok) {
-        throw new Error('Failed to get response')
+        throw new Error(data.error || 'Failed to get response')
       }
 
-      const data = await res.json()
       setMessages((prev) => [
         ...prev,
         { role: 'assistant', content: data.response },
@@ -72,7 +74,7 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
         ...prev,
         {
           role: 'assistant',
-          content: 'I apologize, but I encountered an error. Please try again.',
+          content: `I apologize, but I encountered an error: ${error instanceof Error ? error.message : 'Unknown error occurred'}. Please try again.`,
         },
       ])
     } finally {
@@ -84,108 +86,136 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
           className={cn(
-            'fixed z-50 bg-white shadow-2xl overflow-hidden border border-gray-200',
+            'fixed z-50 overflow-hidden border border-gray-100',
             'sm:bottom-24 bottom-0 right-0 w-full h-[100dvh]',
-            'sm:w-[400px] sm:h-[480px] sm:right-4 sm:rounded-2xl'
+            'sm:w-[400px] sm:h-[450px] sm:right-8 sm:rounded-2xl',
+            'bg-gradient-to-b from-white to-gray-50',
+            'shadow-[0_0_50px_0_rgba(0,0,0,0.1)]'
           )}
         >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white">
+          {/* Header */}
+          <motion.div 
+            className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 py-3 px-6"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+          >
             <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <h3 className="font-semibold">Digital Workspace Assistant</h3>
-              </div>
-              <button
-                onClick={onClose}
-                className="hover:bg-white/20 p-2 rounded-lg transition-colors"
-                aria-label="Close chat"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <div className="flex items-center gap-3">
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 360],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  <Sparkles className="h-5 w-5 text-yellow-300" />
+                </motion.div>
+                <div className="flex items-center gap-3">
+                  <h3 className="font-semibold text-sm text-white">EL Drive AI Assistant</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-xs text-white/80">Online</span>
+                  </div>
+                </div>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={onClose}
+                className="p-1.5 rounded-full hover:bg-white/10 transition-colors"
+              >
+                <X className="h-4 w-4 text-white" />
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="h-[calc(100%-8rem)] overflow-y-auto p-4 space-y-4">
+          {/* Messages */}
+          <div className="h-[calc(100%-8rem)] overflow-y-auto px-6 py-4 space-y-6 scroll-smooth">
             {messages.map((message, index) => (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: message.role === 'assistant' ? -20 : 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
                 key={index}
                 className={cn(
-                  'max-w-[80%] p-3 rounded-2xl text-sm sm:text-base',
+                  'max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed',
                   message.role === 'assistant'
-                    ? 'bg-gray-100 text-gray-800 rounded-tl-none'
-                    : 'bg-blue-600 text-white ml-auto rounded-tr-none'
+                    ? 'bg-gradient-to-br from-gray-100 to-gray-50 text-gray-800 rounded-tl-none shadow-sm'
+                    : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white ml-auto rounded-tr-none shadow-md'
                 )}
               >
-                {message.content}
+                <div className="text-base">
+                  {message.content}
+                </div>
+                <div className={cn(
+                  "text-xs mt-2",
+                  message.role === 'assistant' ? 'text-gray-400' : 'text-blue-100'
+                )}>
+                  {new Date().toLocaleTimeString()}
+                </div>
               </motion.div>
             ))}
             {isLoading && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-gray-100 text-gray-800 max-w-[80%] p-3 rounded-2xl rounded-tl-none"
+                className="bg-gradient-to-br from-gray-100 to-gray-50 max-w-[85%] p-4 rounded-2xl rounded-tl-none shadow-sm"
               >
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <div className="flex items-center gap-3">
+                  <Loader2 className="h-5 w-5 animate-spin text-blue-500" />
+                  <span className="text-sm text-gray-500">Thinking...</span>
+                </div>
               </motion.div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
-          <form
+          {/* Input Form */}
+          <motion.form
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
             onSubmit={handleSubmit}
-            className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t"
+            className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-gray-100"
           >
-            <div className="flex gap-2 max-w-[100%] mx-auto">
+            <div className="flex gap-3 items-center">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about files, signatures, or document management..."
-                className="flex-1 p-2 sm:p-3 border rounded-xl text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 p-4 rounded-xl text-base bg-gray-50 border border-gray-100 
+                         focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500
+                         transition-all duration-200"
                 disabled={isLoading}
               />
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 type="submit"
                 disabled={isLoading}
-                className="bg-blue-600 text-white p-2 sm:p-3 rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50"
-                aria-label="Send message"
+                className="p-4 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 
+                         text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 
+                         disabled:opacity-50 transition-all duration-200"
               >
-                <svg
-                  className="w-5 h-5 sm:w-6 sm:h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  />
-                </svg>
-              </button>
+                <Send className="h-6 w-6" />
+              </motion.button>
             </div>
-          </form>
+          </motion.form>
         </motion.div>
       )}
     </AnimatePresence>
   )
 }
+
+

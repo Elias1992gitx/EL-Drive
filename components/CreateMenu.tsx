@@ -1,5 +1,3 @@
-'use client'
-
 import { Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -12,7 +10,7 @@ import {
   ArrowUpTrayIcon,
   InboxIcon,
   ArrowTopRightOnSquareIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import SubMenu from './SubMenu'
@@ -20,7 +18,7 @@ import SubMenu from './SubMenu'
 interface CreateMenuProps {
   isOpen: boolean
   onClose: () => void
-  anchorRef: React.RefObject<HTMLButtonElement>
+  anchorEl: HTMLElement | null
 }
 
 const menuItems = [
@@ -30,10 +28,14 @@ const menuItems = [
       { icon: FolderIcon, label: 'Folder', hasSubmenu: true },
       { icon: DocumentIcon, label: 'Document', hasSubmenu: true },
       { icon: VideoCameraIcon, label: 'Screen recording' },
-      { icon: PresentationChartBarIcon, label: 'Presentation', hasSubmenu: true },
+      {
+        icon: PresentationChartBarIcon,
+        label: 'Presentation',
+        hasSubmenu: true,
+      },
       { icon: TableCellsIcon, label: 'Spreadsheet', hasSubmenu: true },
       { icon: GlobeAltIcon, label: 'Web shortcut' },
-    ]
+    ],
   },
   {
     section: 'Add',
@@ -41,19 +43,19 @@ const menuItems = [
       { icon: ArrowUpTrayIcon, label: 'Upload', hasSubmenu: true },
       { icon: InboxIcon, label: 'Send file request' },
       { icon: ArrowTopRightOnSquareIcon, label: 'Import from Google Drive' },
-    ]
-  }
+    ],
+  },
 ]
 
-export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuProps) {
+export default function CreateMenu({
+  isOpen,
+  onClose,
+  anchorEl,
+}: CreateMenuProps) {
   const [activeSubmenu, setActiveSubmenu] = useState<{
-    type: string;
-    position: { top: number; left: number };
+    type: string
+    position: { top: number; left: number }
   } | null>(null)
-
-  const [isUploading, setIsUploading] = useState(false)
-  const [uploadError, setUploadError] = useState<string | null>(null)
-  const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false)
 
   const handleItemClick = (item: any) => {
     if (!item.hasSubmenu) {
@@ -68,8 +70,8 @@ export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuPro
         type: item.label.toLowerCase(),
         position: {
           top: rect.top,
-          left: rect.right + 2,
-        }
+          left: rect.right - 2,
+        },
       })
     } else {
       setActiveSubmenu(null)
@@ -83,25 +85,8 @@ export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuPro
     }
   }
 
-  const handleFiles = async (files: FileList) => {
-    setIsUploading(true)
-    setUploadError(null)
-    
-    try {
-      // Handle the uploaded files here
-      console.log('Files:', Array.from(files))
-      // Add your file upload logic here
-      
-      setIsUploadDialogOpen(false)
-    } catch (error) {
-      setUploadError(error instanceof Error ? error.message : 'Error uploading files')
-    } finally {
-      setIsUploading(false)
-    }
-  }
-
-  if (!anchorRef.current) return null
-  const rect = anchorRef.current.getBoundingClientRect()
+  if (!anchorEl) return null
+  const rect = anchorEl.getBoundingClientRect()
 
   return (
     <AnimatePresence>
@@ -114,7 +99,7 @@ export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuPro
             onClick={onClose}
             className="fixed inset-0 z-40"
           />
-          
+
           <div className="relative">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -123,7 +108,7 @@ export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuPro
               transition={{ duration: 0.1 }}
               style={{
                 position: 'fixed',
-                top: rect.bottom + 4,
+                top: rect.bottom + 8,
                 left: rect.left,
                 zIndex: 50,
               }}
@@ -134,14 +119,18 @@ export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuPro
                   {index > 0 && <div className="h-[1px] bg-gray-100 mx-3" />}
                   <div className="py-2">
                     <div className="px-4 py-1.5">
-                      <p className="text-xs font-medium text-gray-500">{section.section}</p>
+                      <p className="text-xs font-medium text-gray-500">
+                        {section.section}
+                      </p>
                     </div>
                     {section.items.map((item) => (
                       <motion.button
                         key={item.label}
                         onClick={() => handleItemClick(item)}
                         onMouseEnter={(e) => handleMouseEnter(e, item)}
-                        data-active={activeSubmenu?.type === item.label.toLowerCase()}
+                        data-active={
+                          activeSubmenu?.type === item.label.toLowerCase()
+                        }
                         className="w-full px-4 py-2 flex items-center gap-3 hover:bg-gray-50 group relative"
                       >
                         <item.icon className="h-5 w-5 text-gray-400 group-hover:text-gray-600" />
@@ -160,8 +149,15 @@ export default function CreateMenu({ isOpen, onClose, anchorRef }: CreateMenuPro
 
             <AnimatePresence>
               {activeSubmenu && (
-                <SubMenu 
-                  type={activeSubmenu.type as 'folder' | 'document' | 'presentation' | 'spreadsheet' | 'upload'}
+                <SubMenu
+                  type={
+                    activeSubmenu.type as
+                      | 'folder'
+                      | 'document'
+                      | 'presentation'
+                      | 'spreadsheet'
+                      | 'upload'
+                  }
                   position={activeSubmenu.position}
                   onSelect={handleSubMenuSelect}
                 />
