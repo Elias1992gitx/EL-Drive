@@ -14,17 +14,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const isAuthPage = pathname?.includes('/sign-in') || pathname?.includes('/sign-up')
+  const isAuthPage = pathname?.startsWith('/sign-')
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
         />
       </head>
-      <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}>
+      <body className={inter.className} suppressHydrationWarning>
         <ClerkProvider>
           <SidebarProvider>
             {isAuthPage ? (
