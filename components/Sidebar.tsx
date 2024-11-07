@@ -10,7 +10,6 @@ import { Bars3Icon } from '@heroicons/react/24/solid'
 export default function Sidebar() {
   const { isExpanded, toggleSidebar, setExpanded } = useSidebar()
   const isDesktop = useBreakpoint('lg')
-  const isSmallScreen = useBreakpoint('sm')
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const pathname = usePathname()
 
@@ -52,11 +51,11 @@ export default function Sidebar() {
         animate={
           !isDesktop
             ? isMobileOpen
-              ? { x: 0 }
-              : { x: '-100%' }
+              ? { x: 0, width: '240px' }
+              : { x: '-100%', width: '240px' }
             : isExpanded
-            ? { width: 'var(--sidebar-width)' }
-            : { width: 'var(--sidebar-collapsed-width)' }
+            ? { width: 'var(--sidebar-width)', x: 0 }
+            : { width: '0px', x: 0 }
         }
       >
         <SidebarContent isMobile={!isDesktop} />

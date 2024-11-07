@@ -37,8 +37,8 @@ export default function SidebarContent({ isMobile }: SidebarContentProps) {
             <Bars3Icon className="h-5 w-5 text-gray-500" />
           </button>
           
-          {/* Logo */}
-          {isExpanded && (
+          {/* Logo - Only show when expanded and not mobile */}
+          {isExpanded && !isMobile && (
             <img src="/ELST.svg" alt="ELST Logo" className="h-12 w-auto" />
           )}
         </div>

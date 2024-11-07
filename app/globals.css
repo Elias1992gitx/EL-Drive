@@ -37,6 +37,8 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 0px;
 }
 
 @media (prefers-color-scheme: dark) {
