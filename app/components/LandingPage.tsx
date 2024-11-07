@@ -7,7 +7,7 @@ import { BackgroundLines } from '@/components/ui/background-lines'
 import { useAuth } from '@clerk/nextjs'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Feature from '@/components/Feature'
 import Image from 'next/image';
 

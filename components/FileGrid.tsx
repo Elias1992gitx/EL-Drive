@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { FileCard } from '@/components/FileCard'
-import EmptyState from '@/components/EmptyState'
 import { 
-  DocumentIcon, FolderIcon, ClockIcon, StarIcon,
-  ViewColumnsIcon, Squares2X2Icon, Bars4Icon, ChevronUpIcon,
+    ClockIcon, StarIcon,
+   Squares2X2Icon, Bars4Icon, ChevronUpIcon,
   InformationCircleIcon
 } from '@heroicons/react/24/outline'
 
@@ -17,10 +15,6 @@ const dummyFiles = [
   { id: '4', name: 'Presentation.pptx', type: 'file' as const },
 ]
 
-const tabs = [
-  { icon: ClockIcon, label: 'Recents' },
-  { icon: StarIcon, label: 'Starred' }
-]
 
 export default function FileGrid() {
   const [selectedFiles, setSelectedFiles] = useState<string[]>([])

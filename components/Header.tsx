@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, Fragment } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { Menu, Transition } from '@headlessui/react'
 import { 
@@ -28,9 +28,9 @@ export default function Header() {
   const { isExpanded } = useSidebar()
 
   // Calculate dynamic max-width based on sidebar state
-  const getSearchMaxWidth = () => {
-    return isExpanded ? 'max-w-xl' : 'max-w-3xl'
-  }
+  // const getSearchMaxWidth = () => {
+  //   return isExpanded ? 'max-w-xl' : 'max-w-3xl'
+  // }
 
   // Handle scroll effect
   useEffect(() => {
@@ -142,10 +142,12 @@ export default function Header() {
             <Menu as="div" className="relative">
               <Menu.Button className="flex items-center gap-2 p-1.5 rounded-full hover:bg-gray-100 transition-colors">
                 {user?.imageUrl ? (
-                  <img 
+                  <Image 
                     src={user.imageUrl} 
                     alt="Profile" 
                     className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
+                    width={32}
+                    height={32}
                   />
                 ) : (
                   <UserCircleIcon className="h-8 w-8 text-gray-400" />
@@ -233,3 +235,4 @@ export default function Header() {
     </header>
   )
 } 
+  

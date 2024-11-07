@@ -6,7 +6,6 @@ import {
   XMarkIcon,
   ArrowUpTrayIcon,
   DeviceTabletIcon,
-  EnvelopeIcon,
 } from '@heroicons/react/24/outline'
 
 interface GetSignatureDialogProps {
@@ -24,7 +23,6 @@ export default function GetSignatureDialog({
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedColor, setSelectedColor] = useState('#000000')
   const [isDrawing, setIsDrawing] = useState(false)
-  const [signature, setSignature] = useState<string | null>(null)
 
   const handleStartDrawing = () => {
     setIsDrawing(true)
@@ -59,13 +57,11 @@ export default function GetSignatureDialog({
     const ctx = canvas.getContext('2d')
     if (!ctx) return
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    setSignature(null)
   }
 
   const saveSignature = () => {
     if (!canvasRef.current) return
     const dataUrl = canvasRef.current.toDataURL()
-    setSignature(dataUrl)
     onClose()
   }
 

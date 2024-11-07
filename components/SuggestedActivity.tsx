@@ -5,8 +5,6 @@ import { EyeIcon, FolderIcon, DocumentIcon } from '@heroicons/react/24/outline'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function SuggestedActivity() {
-  const isMobile = useMediaQuery('(max-width: 640px)')
-  
   return (
     <div className="mobile-safe-area py-4">
       <motion.div 
