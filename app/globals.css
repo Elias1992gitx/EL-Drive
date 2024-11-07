@@ -5,7 +5,7 @@
 /* Responsive breakpoint utilities */
 @layer utilities {
   .responsive-container {
-    @apply max-w-[90%] sm:max-w-[85%] md:max-w-[80%] lg:max-w-7xl mx-auto;
+    @apply max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-7xl mx-auto;
   }
   
   .responsive-padding {
@@ -64,5 +64,15 @@ body {
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@layer utilities {
+  .text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+  
+  .heading-responsive {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
   }
 }

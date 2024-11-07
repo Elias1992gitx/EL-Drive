@@ -5,6 +5,7 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 interface SidebarContextType {
   isExpanded: boolean
   toggleSidebar: () => void
+  setExpanded: (value: boolean) => void
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
@@ -15,7 +16,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
   const toggleSidebar = () => setIsExpanded(!isExpanded)
 
   return (
-    <SidebarContext.Provider value={{ isExpanded, toggleSidebar }}>
+    <SidebarContext.Provider value={{ isExpanded, toggleSidebar, setExpanded: setIsExpanded }}>
       {children}
     </SidebarContext.Provider>
   )

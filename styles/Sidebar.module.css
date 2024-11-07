@@ -1,0 +1,30 @@
+/* Base styles: Sidebar is hidden on mobile */
+.sidebar {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 50;
+  background-color: white;
+}
+
+/* Show sidebar above 640px */
+@media (min-width: 640px) {
+  .sidebar {
+    display: block;
+  }
+}
+
+/* Toggle button styling */
+.toggleButton {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 1rem;
+  z-index: 51;
+  /* Hide toggle button on desktop */
+  @media (min-width: 640px) {
+    display: none;
+  }
+} 
