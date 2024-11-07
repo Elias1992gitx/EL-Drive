@@ -66,38 +66,3 @@ body {
     display: none;
   }
 }
-
-.main-menu {
-  position: relative;
-}
-
-.main-menu.submenu-active::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -1px;
-  bottom: 0;
-  width: 2px;
-  background: white;
-  z-index: 52;
-}
-
-.main-menu button[data-active="true"] {
-  background-color: #F9FAFB;
-}
-
-.main-menu [data-active="true"] {
-  background-color: #F9FAFB;
-  position: relative;
-}
-
-.main-menu [data-active="true"]::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -1px;
-  bottom: 0;
-  width: 2px;
-  background-color: white;
-  z-index: 52;
-}

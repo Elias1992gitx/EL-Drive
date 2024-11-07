@@ -1,6 +1,5 @@
-
-import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 import type { Config } from "tailwindcss";
+import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 
 const config: Config = {
   content: [
@@ -17,6 +16,8 @@ const config: Config = {
       },
       animation: {
         gradient: 'gradient 8s linear infinite',
+        aurora: 'aurora 60s linear infinite',
+        'aurora-movement': 'aurora-movement 60s linear infinite',
       },
       keyframes: {
         gradient: {
@@ -29,36 +30,33 @@ const config: Config = {
             'background-position': 'right center',
           },
         },
-      },
-
-      screens: {
-        xs: '375px',
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px',
-        '2xl': '1536px',
-      },
-      spacing: {
-        'safe-top': 'env(safe-area-inset-top)',
-        'safe-bottom': 'env(safe-area-inset-bottom)',
-        'safe-left': 'env(safe-area-inset-left)',
-        'safe-right': 'env(safe-area-inset-right)',
+        aurora: {
+          from: {
+            backgroundPosition: '50% 50%, 50% 50%',
+          },
+          to: {
+            backgroundPosition: '350% 50%, 350% 50%',
+          },
+        },
+        'aurora-movement': {
+          '0%': { transform: 'translate(0%, 0%) rotate(0deg)' },
+          '50%': { transform: 'translate(1%, 1%) rotate(180deg)' },
+          '100%': { transform: 'translate(0%, 0%) rotate(360deg)' },
+        },
       },
     },
   },
   plugins: [addVariablesForColors],
 }
 
-// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
 function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  const colors = flattenColorPalette(theme("colors"));
+  const variables = Object.fromEntries(
+    Object.entries(colors).map(([key, val]) => [`--${key}`, val])
   );
  
   addBase({
-    ":root": newVars,
+    ":root": variables,
   });
 }
 

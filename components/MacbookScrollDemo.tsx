@@ -3,11 +3,11 @@ import { MacbookScroll } from './ui/macbook-scroll'
 
 export function MacbookScrollDemo() {
   return (
-    <div className="overflow-hidden dark:bg-[#0B0B0F] bg-white w-full">
+    <div className="overflow-hidden bg-transparent w-full">
       <MacbookScroll
         title={
-          <span>
-            Your files, anywhere, anytime. <br /> 
+          <span className="text-gray-900">
+            Your files, anywhere, anytime. <br />
             Secure and seamless.
           </span>
         }
