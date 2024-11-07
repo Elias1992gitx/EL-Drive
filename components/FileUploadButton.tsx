@@ -21,7 +21,7 @@ export default function FileUploadButton() {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(false)
-    
+
     const file = e.dataTransfer.files[0]
     if (file) {
       handleFile(file)
@@ -59,7 +59,7 @@ export default function FileUploadButton() {
     console.log({
       name: file.name,
       size: file.size,
-      type: file.type
+      type: file.type,
     })
   }
 
@@ -91,7 +91,7 @@ export default function FileUploadButton() {
         className="hidden"
         onChange={handleFileSelect}
       />
-      
+
       <motion.button
         onClick={() => fileInputRef.current?.click()}
         onDragOver={handleDragOver}
@@ -103,9 +103,10 @@ export default function FileUploadButton() {
           px-6 py-[21px] rounded-lg text-sm font-medium 
           flex items-center gap-2 whitespace-nowrap
           transition-all duration-200 ease-out
-          ${isDragging 
-            ? 'border-2 border-blue-500 bg-blue-50 text-blue-600' 
-            : 'border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-50'
+          ${
+            isDragging
+              ? 'border-2 border-blue-500 bg-blue-50 text-blue-600'
+              : 'border-2 border-dashed border-gray-300 hover:border-gray-400 hover:bg-gray-50'
           }
         `}
       >
@@ -126,13 +127,13 @@ export default function FileUploadButton() {
               <span className="text-sm truncate">{selectedFile.name}</span>
             </div>
             <div className="flex items-center gap-2">
-              <button 
+              <button
                 onClick={downloadFile}
                 className="text-sm text-blue-500 hover:text-blue-600"
               >
                 Download
               </button>
-              <button 
+              <button
                 onClick={clearFile}
                 className="p-1 hover:bg-gray-100 rounded-full"
               >
@@ -142,8 +143,8 @@ export default function FileUploadButton() {
           </div>
           {selectedFile.type.startsWith('image/') && fileContent && (
             <div className="mt-2">
-              <img 
-                src={fileContent} 
+              <img
+                src={fileContent}
                 alt={selectedFile.name}
                 className="max-h-32 rounded-lg"
               />

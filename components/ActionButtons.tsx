@@ -294,6 +294,11 @@ export default function ActionButtons() {
         </div>
       </Dialog>
 
+      <CreateFolderDialog
+        isOpen={isCreateFolderOpen}
+        onClose={() => setIsCreateFolderOpen(false)}
+      />
+
       <SignYourselfDialog
         isOpen={isSignYourselfOpen}
         onClose={() => setIsSignYourselfOpen(false)}

@@ -1,5 +1,3 @@
-'use client'
-
 import { Dialog } from '@headlessui/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
