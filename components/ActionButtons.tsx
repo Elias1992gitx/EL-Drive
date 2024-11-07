@@ -57,20 +57,16 @@ export default function ActionButtons() {
 
   return (
     <>
-      <div
-        className="flex flex-col sm:flex-row items-start sm:items-center gap-2 
-           mobile-safe-area py-3 sm:py-4 border-b border-gray-100"
-      >
-        <div className="flex items-center gap-4 mobile-safe-area py-3">
-          {/* Create and Upload buttons */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 py-3 sm:py-4 border-b border-gray-100">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
           <button
             ref={createButtonRef}
             onClick={() => setIsCreateMenuOpen(true)}
-            className="touch-target w-[140px] h-[70px] px-4 bg-black text-white rounded-lg 
-                     text-sm font-medium flex items-center justify-center gap-2"
+            className="w-[140px] h-[80px] sm:w-auto sm:h-16 px-4 bg-black text-white rounded-lg text-sm font-medium flex items-center 
+            justify-center gap-2 "
           >
             <PlusIcon className="h-4 w-4" />
-            <span className="sm:hidden lg:inline">Create</span>
+            <span className="hidden sm:inline">Create</span>
           </button>
 
           <button
@@ -82,7 +78,6 @@ export default function ActionButtons() {
             <span className="sm:hidden lg:inline">Upload</span>
           </button>
 
-          {/* Action buttons */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

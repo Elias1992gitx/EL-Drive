@@ -29,13 +29,13 @@ export default function EditPDFDialog({ isOpen, onClose }: EditPDFDialogProps) {
           onClose={onClose}
           className="fixed inset-0 z-50 overflow-y-auto"
         >
-          <div className="fixed inset-0 flex items-center justify-center p-4">
+          <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4">
             <Dialog.Panel
               as={motion.div}
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="bg-white rounded-xl shadow-2xl w-[70%] h-[70vh] overflow-hidden flex flex-col"
+              className="bg-white rounded-xl shadow-2xl w-full sm:w-[70%] h-[70vh] overflow-hidden flex flex-col"
             >
               {/* Header */}
               <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">

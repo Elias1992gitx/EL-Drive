@@ -95,7 +95,7 @@ export default function GetSignatureDialog({
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative bg-white rounded-xl shadow-2xl w-[85%] sm:w-[500px] max-w-lg overflow-hidden"
+              className="relative bg-white rounded-xl shadow-2xl w-full sm:w-[500px] max-w-lg overflow-hidden"
             >
               <div className="p-3 sm:p-6">
                 <div className="flex items-center justify-between mb-4 sm:mb-6">

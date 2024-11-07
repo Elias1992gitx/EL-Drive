@@ -89,6 +89,12 @@ export default function Header() {
               maxWidth: isExpanded ? '32rem' : '48rem',
               marginLeft: isExpanded ? '16rem' : '4rem'
             }}
+            transition={{
+              type: 'spring',
+              stiffness: 50,
+              damping: 20,
+              duration: 0.8
+            }}
           >
             <div className="relative flex items-center gap-2 w-full">
               <div className="relative flex-1">
