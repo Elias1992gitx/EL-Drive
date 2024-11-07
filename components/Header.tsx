@@ -10,15 +10,18 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
-  BellIcon
+  BellIcon,
+  UserPlusIcon
 } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSidebar } from '@/contexts/SidebarContext'
+import InviteMemberDialog from './InviteMemberDialog'
 
 export default function Header() {
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isInviteOpen, setIsInviteOpen] = useState(false)
   const { signOut } = useAuth()
   const { user, isLoaded } = useUser()
   const { isExpanded } = useSidebar()
@@ -77,32 +80,52 @@ export default function Header() {
           {/* Search Bar - Center with dynamic width */}
           <motion.div 
             className={`
-              flex-1 hidden lg:block
+              flex-1 items-center gap-2
               ${isSearchFocused ? 'z-30' : ''}
               transition-all duration-300 ease-in-out
+              lg:flex hidden
             `}
             animate={{
               maxWidth: isExpanded ? '32rem' : '48rem',
               marginLeft: isExpanded ? '16rem' : '4rem'
             }}
           >
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Search files and folders..."
-                onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setIsSearchFocused(false)}
-                className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 
-                         rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20
-                         transition-all duration-200 hover:bg-gray-100 focus:bg-white"
-              />
-              <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+            <div className="relative flex items-center gap-2 w-full">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  placeholder="Search files and folders..."
+                  onFocus={() => setIsSearchFocused(true)}
+                  onBlur={() => setIsSearchFocused(false)}
+                  className="w-full pl-10 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 
+                           rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500/20
+                           transition-all duration-200 hover:bg-gray-100 focus:bg-white"
+                />
+                <MagnifyingGlassIcon className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              </div>
+
+              <button 
+                onClick={() => setIsInviteOpen(true)}
+                className="hidden md:flex items-center gap-2 bg-black text-sm text-white hover:text-white 
+                         px-3 py-2 rounded-lg hover:bg-gray-800 whitespace-nowrap border border-gray-200"
+              >
+                <UserPlusIcon className="h-4 w-4" />
+                <span className="hidden lg:inline">Invite members</span>
+              </button>
             </div>
           </motion.div>
 
           {/* Right Actions */}
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* Notifications */}
+            {/* Invite Members Button - Mobile */}
+            <button 
+              onClick={() => setIsInviteOpen(true)}
+              className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <UserPlusIcon className="h-6 w-6 text-gray-600" />
+            </button>
+
+            {/* Existing Notifications button */}
             <button className="p-2 rounded-full hover:bg-gray-100 transition-colors relative">
               <BellIcon className="h-6 w-6 text-gray-600" />
               <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full" />
@@ -195,6 +218,11 @@ export default function Header() {
           )}
         </AnimatePresence>
       </div>
+
+      <InviteMemberDialog
+        isOpen={isInviteOpen}
+        onClose={() => setIsInviteOpen(false)}
+      />
     </header>
   )
 } 
