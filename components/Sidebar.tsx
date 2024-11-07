@@ -8,7 +8,7 @@ import styles from '@/styles/Sidebar.module.css'
 import { Bars3Icon } from '@heroicons/react/24/solid'
 
 export default function Sidebar() {
-  const { isExpanded, toggleSidebar, setExpanded } = useSidebar()
+  const { isExpanded, setExpanded } = useSidebar()
   const isDesktop = useBreakpoint('lg')
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const pathname = usePathname()

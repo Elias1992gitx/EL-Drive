@@ -11,13 +11,18 @@ import {
 import { useState } from 'react'
 import AutomatedFolderDialog from './AutomatedFolderDialog'
 
+interface MenuItem {
+  icon: React.ComponentType<{ className?: string }>
+  label: string
+}
+
 interface SubMenuProps {
   type: 'folder' | 'document' | 'presentation' | 'spreadsheet' | 'upload'
   position: { top: number; left: number }
-  onSelect: (item: { label: string; icon: any }) => void
+  onSelect: (item: MenuItem) => void
 }
 
-const subMenuItems = {
+const subMenuItems: Record<SubMenuProps['type'], MenuItem[]> = {
   folder: [
     { icon: FolderIcon, label: 'Folder' },
     { icon: UsersIcon, label: 'Shared folder' },
@@ -46,7 +51,7 @@ export default function SubMenu({ type, position, onSelect }: SubMenuProps) {
   const items = subMenuItems[type] || []
   const [isAutomatedFolderDialogOpen, setIsAutomatedFolderDialogOpen] = useState(false)
   
-  const handleItemClick = (item: { label: string; icon: any }) => {
+  const handleItemClick = (item: MenuItem) => {
     if (item.label === 'Automated folder') {
       setIsAutomatedFolderDialogOpen(true)
       return

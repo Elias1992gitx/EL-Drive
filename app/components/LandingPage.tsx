@@ -9,14 +9,13 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Feature from '@/components/Feature'
+import Image from 'next/image';
 
 export default function LandingPage() {
-  const [isLoaded, setIsLoaded] = useState(false)
   const router = useRouter()
   const { isSignedIn } = useAuth()
 
   useEffect(() => {
-    setIsLoaded(true)
     if (isSignedIn) {
       router.push('/dashboard')
     }
@@ -44,10 +43,13 @@ export default function LandingPage() {
         <nav className="fixed top-0 left-0 right-0 backdrop-blur-sm bg-white/70 z-50 px-4 sm:px-6 py-3 sm:py-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
-              <img
+              <Image
                 src="/ELST.svg"
                 alt="Cloudy"
                 className="h-8 sm:h-12 md:h-16 w-auto transition-all duration-300"
+                width={500}
+                height={300}
+                priority={true}
               />
             </div>
             <div className="flex items-center gap-2 sm:gap-4">

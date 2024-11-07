@@ -9,7 +9,7 @@ export const PinContainer = ({
 }: {
   children: React.ReactNode;
   title?: string;
-  href: string;
+  href?: string;
 }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -20,8 +20,11 @@ export const PinContainer = ({
     mouseY.set(clientY - top);
   }
 
+  const Container = href ? 'a' : 'div';
+
   return (
-    <div
+    <Container
+      href={href}
       className="relative group/pin cursor-pointer"
       onMouseMove={onMouseMove}
     >
@@ -46,6 +49,6 @@ export const PinContainer = ({
           <span className="text-sm text-gray-500 font-medium">{title}</span>
         )}
       </div>
-    </div>
+    </Container>
   );
 };

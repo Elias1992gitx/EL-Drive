@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react'
 import { DocumentIcon, FolderIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 interface AutomatedFolderDialogProps {
@@ -30,7 +30,6 @@ export default function AutomatedFolderDialog({
   isOpen,
   onClose,
 }: AutomatedFolderDialogProps) {
-  const [selectedFolder, setSelectedFolder] = useState<string>('')
   const [selectedOption, setSelectedOption] = useState('month')
 
   return (
@@ -153,7 +152,7 @@ export default function AutomatedFolderDialog({
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  disabled={!selectedFolder}
+                  disabled={!selectedOption}
                   className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm 
                            font-medium hover:bg-blue-600 disabled:bg-gray-200 
                            disabled:text-gray-400 disabled:cursor-not-allowed"
@@ -314,24 +313,3 @@ export default function AutomatedFolderDialog({
     </Dialog>
   )
 }
-
-// Add this to your global CSS
-const styles = `
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(203, 213, 225, 1) transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(203, 213, 225, 1);
-  border-radius: 3px;
-}
-`

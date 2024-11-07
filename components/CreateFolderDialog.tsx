@@ -1,5 +1,5 @@
 import { Dialog } from '@headlessui/react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { FolderIcon, XMarkIcon } from '@heroicons/react/24/outline'
 

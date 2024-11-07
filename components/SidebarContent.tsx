@@ -7,6 +7,12 @@ interface SidebarContentProps {
   isMobile: boolean
 }
 
+interface MenuItem {
+  label: string;
+  icon?: any; // Or a more specific type if possible
+  href?: string;
+}
+
 const menuItemVariants = {
   expanded: {
     opacity: 1,
@@ -59,7 +65,7 @@ export default function SidebarContent({ isMobile }: SidebarContentProps) {
       {/* Navigation content */}
       <div className="flex-1 overflow-y-auto">
         <nav className="space-y-0.5 p-2">
-          {menuItems.map((item) => (
+          {menuItems.map((item: MenuItem) => (
             <motion.a
               key={item.label}
               href={item.href}

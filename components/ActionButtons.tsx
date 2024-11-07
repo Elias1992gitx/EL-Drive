@@ -111,7 +111,6 @@ export default function ActionButtons() {
             <PencilSquareIcon className="h-4 w-4" />
             <span className="text-sm">Get signatures</span>
           </button>
-
           <button
             onClick={() => setIsSignYourselfOpen(true)}
             className="w-[140px] h-[70px] px-4 border border-gray-200 rounded-lg 
@@ -297,6 +296,16 @@ export default function ActionButtons() {
       <SignYourselfDialog
         isOpen={isSignYourselfOpen}
         onClose={() => setIsSignYourselfOpen(false)}
+      />
+
+      <EditPDFDialog
+        isOpen={isEditPDFOpen}
+        onClose={() => setIsEditPDFOpen(false)}
+      />
+
+      <GetSignatureDialog
+        isOpen={isGetSignatureOpen}
+        onClose={() => setIsGetSignatureOpen(false)}
       />
     </>
   )

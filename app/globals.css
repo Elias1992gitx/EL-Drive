@@ -78,3 +78,22 @@ body {
     @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
   }
 }
+
+/* Add these styles to your global CSS file */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(203, 213, 225, 1) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(203, 213, 225, 1);
+  border-radius: 3px;
+}

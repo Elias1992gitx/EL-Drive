@@ -1,40 +1,57 @@
 'use client'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { MotionValue, motion, useScroll, useTransform } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 import {
   IconBrightnessDown,
   IconBrightnessUp,
-  IconCaretRightFilled,
-  IconCaretUpFilled,
-  IconChevronUp,
+  IconTable,
+  IconSearch,
   IconMicrophone,
   IconMoon,
+  IconPlayerTrackPrev,
   IconPlayerSkipForward,
   IconPlayerTrackNext,
-  IconPlayerTrackPrev,
-  IconTable,
-  IconVolume,
-  IconVolume2,
   IconVolume3,
+  IconVolume2,
+  IconVolume,
+  IconWorld,
+  IconChevronUp,
+  IconCommand,
+  IconCaretUpFilled,
+  IconCaretLeftFilled,
+  IconCaretDownFilled,
+  IconCaretRightFilled,
 } from '@tabler/icons-react'
-import { IconSearch } from '@tabler/icons-react'
-import { IconWorld } from '@tabler/icons-react'
-import { IconCommand } from '@tabler/icons-react'
-import { IconCaretLeftFilled } from '@tabler/icons-react'
-import { IconCaretDownFilled } from '@tabler/icons-react'
-import Image from 'next/image'
 
-export const MacbookScroll = ({
-  src,
-  showGradient,
-  title,
-  badge,
-}: {
+interface MacbookScrollProps {
   src?: string
   showGradient?: boolean
   title?: string | React.ReactNode
   badge?: React.ReactNode
+}
+
+interface LidProps {
+  scaleX: MotionValue<number>
+  scaleY: MotionValue<number>
+  rotate: MotionValue<number>
+  translate: MotionValue<number>
+  src?: string
+}
+
+interface KBtnProps {
+  className?: string
+  children?: React.ReactNode
+  childrenClassName?: string
+  backlit?: boolean
+}
+
+export const MacbookScroll: React.FC<MacbookScrollProps> = ({
+  src,
+  showGradient,
+  title,
+  badge,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -119,18 +136,12 @@ export const MacbookScroll = ({
   )
 }
 
-export const Lid = ({
+export const Lid: React.FC<LidProps> = ({
   scaleX,
   scaleY,
   rotate,
   translate,
   src,
-}: {
-  scaleX: MotionValue<number>
-  scaleY: MotionValue<number>
-  rotate: MotionValue<number>
-  translate: MotionValue<number>
-  src?: string
 }) => {
   return (
     <div className="relative [perspective:800px]">
@@ -552,16 +563,12 @@ export const Keypad = () => {
     </div>
   )
 }
-export const KBtn = ({
+
+export const KBtn: React.FC<KBtnProps> = ({
   className,
   children,
   childrenClassName,
   backlit = true,
-}: {
-  className?: string
-  children?: React.ReactNode
-  childrenClassName?: string
-  backlit?: boolean
 }) => {
   return (
     <div

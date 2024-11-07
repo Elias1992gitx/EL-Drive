@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import Image from 'next/image';
 
 const cloudInfrastructureImages = [
   // Digital World Visualization
@@ -67,10 +68,13 @@ export default function ServerVisualization() {
                 ease: "easeInOut"
               }}
             >
-              <img
+              <Image
                 src={cloudInfrastructureImages[currentImageIndex]}
                 alt="Cloud Infrastructure"
+                width={500}
+                height={300}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
               
               <div className="absolute inset-0 bg-gradient-to-t from-blue-600/40 to-transparent" />

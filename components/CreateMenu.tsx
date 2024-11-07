@@ -21,7 +21,19 @@ interface CreateMenuProps {
   anchorEl: HTMLElement | null
 }
 
-const menuItems = [
+interface MenuItem {
+  label: string;
+  icon?: any; // Or a more specific type if possible
+  href?: string;
+  hasSubmenu?: boolean;
+}
+
+interface MenuSection {
+  section: string;
+  items: MenuItem[];
+}
+
+const menuItems: MenuSection[] = [
   {
     section: 'Create',
     items: [

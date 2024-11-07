@@ -1,12 +1,12 @@
 import { Dialog } from '@headlessui/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useRef } from 'react'
-import { 
-  PencilSquareIcon, 
+import {
+  PencilSquareIcon,
   XMarkIcon,
   ArrowUpTrayIcon,
   DeviceTabletIcon,
-  EnvelopeIcon
+  EnvelopeIcon,
 } from '@heroicons/react/24/outline'
 
 interface GetSignatureDialogProps {
@@ -14,8 +14,13 @@ interface GetSignatureDialogProps {
   onClose: () => void
 }
 
-export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDialogProps) {
-  const [activeTab, setActiveTab] = useState<'draw' | 'upload' | 'sign-pad'>('draw')
+export default function GetSignatureDialog({
+  isOpen,
+  onClose,
+}: GetSignatureDialogProps) {
+  const [activeTab, setActiveTab] = useState<'draw' | 'upload' | 'sign-pad'>(
+    'draw'
+  )
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [selectedColor, setSelectedColor] = useState('#000000')
   const [isDrawing, setIsDrawing] = useState(false)
@@ -110,7 +115,11 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
                   {[
                     { id: 'draw', label: 'Draw', icon: PencilSquareIcon },
                     { id: 'upload', label: 'Upload', icon: ArrowUpTrayIcon },
-                    { id: 'sign-pad', label: 'Sign Pad', icon: DeviceTabletIcon }
+                    {
+                      id: 'sign-pad',
+                      label: 'Sign Pad',
+                      icon: DeviceTabletIcon,
+                    },
                   ].map((tab) => (
                     <motion.button
                       key={tab.id}
@@ -118,9 +127,10 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
                       whileTap={{ scale: 0.98 }}
                       onClick={() => setActiveTab(tab.id as any)}
                       className={`flex-1 py-2 px-1 sm:px-2 rounded-lg flex items-center justify-center gap-1 sm:gap-2 text-sm
-                        ${activeTab === tab.id 
-                          ? 'bg-blue-50 text-blue-500 font-medium' 
-                          : 'text-gray-600 hover:bg-gray-50'
+                        ${
+                          activeTab === tab.id
+                            ? 'bg-blue-50 text-blue-500 font-medium'
+                            : 'text-gray-600 hover:bg-gray-50'
                         }`}
                     >
                       <tab.icon className="h-4 w-4" />
@@ -152,7 +162,9 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
                       whileTap={{ scale: 0.9 }}
                       onClick={() => setSelectedColor(color)}
                       className={`w-6 h-6 rounded-full ${
-                        selectedColor === color ? 'ring-2 ring-offset-2 ring-blue-500' : ''
+                        selectedColor === color
+                          ? 'ring-2 ring-offset-2 ring-blue-500'
+                          : ''
                       }`}
                       style={{ backgroundColor: color }}
                     />
