@@ -12,6 +12,7 @@ import { useSidebar } from '@/contexts/SidebarContext'
 import { useAuth } from '@/hooks/useAuth'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 export default function Home() {
   const { isSignedIn, isLoaded } = useAuth()
@@ -19,7 +20,7 @@ export default function Home() {
   const [isChatOpen, setIsChatOpen] = useState(false)
 
   if (!isLoaded) {
-    return <div>Loading...</div>
+    return <LoadingSpinner />
   }
 
   if (!isSignedIn) {

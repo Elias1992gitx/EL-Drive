@@ -7,7 +7,7 @@ export function ParticlesBackground() {
   const particles = useMemo(() => Array.from({ length: 50 }), [])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 w-full h-full -z-10">
       {particles.map((_, i) => (
         <motion.div
           key={i}
@@ -30,6 +30,9 @@ export function ParticlesBackground() {
             duration: Math.random() * 20 + 10,
             repeat: Infinity,
             ease: "linear"
+          }}
+          style={{
+            position: 'fixed'
           }}
         />
       ))}
