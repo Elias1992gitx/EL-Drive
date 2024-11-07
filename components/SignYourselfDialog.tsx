@@ -78,7 +78,6 @@ export default function SignYourselfDialog({
 
   const saveSignature = () => {
     if (!canvasRef.current) return
-    const dataUrl = canvasRef.current.toDataURL()
     onClose()
   }
 
