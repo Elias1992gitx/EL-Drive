@@ -4,7 +4,6 @@ import { useState, useRef } from 'react'
 import {
   UserIcon,
   XMarkIcon,
-  PencilSquareIcon,
   ArrowPathIcon,
   CheckIcon,
 } from '@heroicons/react/24/outline'
@@ -21,7 +20,6 @@ export default function SignYourselfDialog({
   const [activeColor, setActiveColor] = useState('#000000')
   const [isDrawing, setIsDrawing] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [signature, setSignature] = useState<string | null>(null)
 
   const colors = [
     '#000000',
@@ -81,7 +79,6 @@ export default function SignYourselfDialog({
   const saveSignature = () => {
     if (!canvasRef.current) return
     const dataUrl = canvasRef.current.toDataURL()
-    setSignature(dataUrl)
     onClose()
   }
 

@@ -61,7 +61,6 @@ export default function GetSignatureDialog({
 
   const saveSignature = () => {
     if (!canvasRef.current) return
-    const dataUrl = canvasRef.current.toDataURL()
     onClose()
   }
 

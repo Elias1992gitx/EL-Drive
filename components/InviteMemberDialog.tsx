@@ -7,7 +7,6 @@ import {
   EnvelopeIcon,
   LinkIcon,
   ChevronDownIcon,
-  CheckIcon,
 } from '@heroicons/react/24/outline'
 
 interface InviteMemberDialogProps {
@@ -20,7 +19,7 @@ export default function InviteMemberDialog({
   onClose,
 }: InviteMemberDialogProps) {
   const [email, setEmail] = useState('')
-  const [inviteLink, setInviteLink] = useState(
+  const [inviteLink] = useState(
     'https://teamsync.com/invite?user=xyz789&role=member'
   )
 

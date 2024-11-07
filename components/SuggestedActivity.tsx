@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { EyeIcon, FolderIcon, DocumentIcon } from '@heroicons/react/24/outline'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function SuggestedActivity() {
   return (
