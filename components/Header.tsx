@@ -16,6 +16,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSidebar } from '@/contexts/SidebarContext'
 import InviteMemberDialog from './InviteMemberDialog'
+import Image from 'next/image';
 
 export default function Header() {
   const [isSearchFocused, setIsSearchFocused] = useState(false)
@@ -73,7 +74,7 @@ export default function Header() {
             
             {/* Logo - visible on mobile */}
             <div className="lg:hidden">
-              <img src="/ELST.svg" alt="ELST Logo" className="h-8 w-auto" />
+              <Image src="/ELST.svg" alt="ELST Logo" width={32} height={32} />
             </div>
           </div>
 

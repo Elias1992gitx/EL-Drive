@@ -3,17 +3,17 @@
 import { useState, useRef } from 'react'
 import { Dialog } from '@headlessui/react'
 import CreateMenu from './CreateMenu'
-import {
-  PlusIcon,
-  ArrowUpTrayIcon,
-  FolderPlusIcon,
-  DocumentTextIcon,
+import { 
+  PlusIcon, 
+  ArrowUpTrayIcon, 
+  FolderPlusIcon, 
+  DocumentTextIcon, 
   PencilSquareIcon,
   UserIcon,
   CloudArrowUpIcon,
-  XMarkIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import CreateFolderDialog from './CreateFolderDialog'
 import EditPDFDialog from './EditPDFDialog'
 import GetSignatureDialog from './GetSignatureDialog'
@@ -57,71 +57,77 @@ export default function ActionButtons() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 py-3 sm:py-4 border-b border-gray-100">
-        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-          <button
-            ref={createButtonRef}
-            onClick={() => setIsCreateMenuOpen(true)}
-            className="w-[140px] h-[80px] sm:w-auto sm:h-16 px-4 bg-black text-white rounded-lg text-sm font-medium flex items-center 
-            justify-center gap-2 "
-          >
-            <PlusIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Create</span>
-          </button>
-
-          <button
-            onClick={() => setIsUploadDialogOpen(true)}
-            className="touch-target w-[140px] h-[70px] px-4 border border-gray-200 rounded-lg 
-                     text-sm font-medium flex items-center justify-center gap-2"
-          >
-            <ArrowUpTrayIcon className="h-5 w-5" />
-            <span className="sm:hidden lg:inline">Upload</span>
-          </button>
-
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setIsCreateFolderOpen(true)}
-            className="w-[140px] h-[70px] px-4 border border-gray-200 rounded-lg 
-                     text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <FolderPlusIcon className="h-4 w-4" />
-            <span className="text-sm">New Folder</span>
-          </motion.button>
-
-          <button
-            onClick={() => setIsEditPDFOpen(true)}
-            className="w-[140px] h-[70px] px-4 border border-gray-200 rounded-lg 
-                     text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <DocumentTextIcon className="h-4 w-4" />
-            <span className="text-sm">Edit PDF</span>
-          </button>
-
-          <button
-            onClick={() => setIsGetSignatureOpen(true)}
-            className="w-[140px] h-[70px] px-4 border border-gray-200 rounded-lg 
-                     text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <PencilSquareIcon className="h-4 w-4" />
-            <span className="text-sm">Get signatures</span>
-          </button>
-          <button
-            onClick={() => setIsSignYourselfOpen(true)}
-            className="w-[140px] h-[70px] px-4 border border-gray-200 rounded-lg 
-                     text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <UserIcon className="h-4 w-4" />
-            <span className="text-sm">Sign yourself</span>
-          </button>
-        </div>
+      <div className="flex items-center gap-3 px-4 py-6 border-b border-gray-100">
+        <button 
+          ref={createButtonRef}
+          onClick={() => setIsCreateMenuOpen(true)}
+          className="px-6 py-[21px] bg-black text-white rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm border border-transparent whitespace-nowrap"
+        >
+          <PlusIcon className="h-4 w-4" />
+          Create
+        </button>
+        
+        <CreateMenu 
+          isOpen={isCreateMenuOpen}
+          onClose={() => setIsCreateMenuOpen(false)}
+          anchorEl={createButtonRef.current}
+        />
+        
+        <button 
+          onClick={() => setIsUploadDialogOpen(true)}
+          className="px-6 py-[21px] border-2 border-dashed border-gray-300 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+        >
+          <ArrowUpTrayIcon className="h-4 w-4" />
+          Upload or drop
+        </button>
+        
+        <button 
+          onClick={() => setIsCreateFolderOpen(true)}
+          className="px-6 py-[21px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+        >
+          <FolderPlusIcon className="h-4 w-4" />
+          Create folder
+        </button>
+        
+        <CreateFolderDialog 
+          isOpen={isCreateFolderOpen}
+          onClose={() => setIsCreateFolderOpen(false)}
+        />
+        
+        <button 
+          onClick={() => setIsEditPDFOpen(true)}
+          className="px-6 py-[22px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+        >
+          <DocumentTextIcon className="h-4 w-4" />
+          Edit PDF
+        </button>
+        
+        <EditPDFDialog 
+          isOpen={isEditPDFOpen}
+          onClose={() => setIsEditPDFOpen(false)}
+        />
+        
+        <button 
+          onClick={() => setIsGetSignatureOpen(true)}
+          className="px-6 py-[22px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+        >
+          <PencilSquareIcon className="h-4 w-4" />
+          Get signatures
+        </button>
+        
+        <GetSignatureDialog 
+          isOpen={isGetSignatureOpen}
+          onClose={() => setIsGetSignatureOpen(false)}
+        />
+        
+        <button 
+          onClick={() => setIsSignYourselfOpen(true)}
+          className="px-6 py-[22px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+        >
+          <UserIcon className="h-4 w-4" />
+          Sign yourself
+        </button>
       </div>
-
-      <CreateMenu
-        isOpen={isCreateMenuOpen}
-        onClose={() => setIsCreateMenuOpen(false)}
-        anchorEl={createButtonRef.current}
-      />
 
       {/* Upload Dialog */}
       <Dialog
@@ -138,7 +144,7 @@ export default function ActionButtons() {
         />
 
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel
+          <Dialog.Panel 
             as={motion.div}
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -166,7 +172,7 @@ export default function ActionButtons() {
                 <XMarkIcon className="h-5 w-5 text-gray-500" />
               </motion.button>
 
-              <div
+              <div 
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -176,10 +182,9 @@ export default function ActionButtons() {
                   transition-all duration-300 ease-in-out
                   backdrop-blur-sm
                   relative overflow-hidden
-                  ${
-                    isDragging
-                      ? 'border-blue-500 bg-blue-50/30'
-                      : 'border-gray-200 hover:border-gray-300 bg-white/50'
+                  ${isDragging 
+                    ? 'border-blue-500 bg-blue-50/30' 
+                    : 'border-gray-200 hover:border-gray-300 bg-white/50'
                   }
                 `}
               >
@@ -190,30 +195,26 @@ export default function ActionButtons() {
                   className="relative z-10 flex flex-col items-center"
                 >
                   <motion.div
-                    animate={
-                      isDragging
-                        ? {
-                            y: [0, -12, 0],
-                            scale: [1, 1.1, 1],
-                          }
-                        : {}
-                    }
-                    transition={{
+                    animate={isDragging ? {
+                      y: [0, -12, 0],
+                      scale: [1, 1.1, 1]
+                    } : {}}
+                    transition={{ 
                       repeat: Infinity,
                       duration: 2.5,
-                      ease: 'easeInOut',
+                      ease: "easeInOut"
                     }}
                     className="relative"
                   >
                     <motion.div
                       className="absolute -inset-4 rounded-full blur-2xl"
                       animate={{
-                        background: isDragging
+                        background: isDragging 
                           ? 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0) 70%)'
-                          : 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%)',
+                          : 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%)'
                       }}
                     />
-                    <CloudArrowUpIcon
+                    <CloudArrowUpIcon 
                       className={`h-20 w-20 ${
                         isDragging ? 'text-blue-500' : 'text-blue-400/80'
                       }`}
@@ -232,7 +233,7 @@ export default function ActionButtons() {
                     <p className="text-gray-500 mt-2 mb-6">
                       Drag & drop files here or click to browse
                     </p>
-
+                    
                     <motion.button
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.98 }}
@@ -248,7 +249,7 @@ export default function ActionButtons() {
                 </motion.div>
 
                 {/* Animated background patterns */}
-                <motion.div
+                <motion.div 
                   className="absolute inset-0 pointer-events-none"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -283,25 +284,10 @@ export default function ActionButtons() {
         </div>
       </Dialog>
 
-      <CreateFolderDialog
-        isOpen={isCreateFolderOpen}
-        onClose={() => setIsCreateFolderOpen(false)}
-      />
-
-      <SignYourselfDialog
+      <SignYourselfDialog 
         isOpen={isSignYourselfOpen}
         onClose={() => setIsSignYourselfOpen(false)}
       />
-
-      <EditPDFDialog
-        isOpen={isEditPDFOpen}
-        onClose={() => setIsEditPDFOpen(false)}
-      />
-
-      <GetSignatureDialog
-        isOpen={isGetSignatureOpen}
-        onClose={() => setIsGetSignatureOpen(false)}
-      />
     </>
   )
-}
+} 

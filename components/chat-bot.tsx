@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { AnimatePresence, motion, useAnimation } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { Message } from '@/lib/types'
-import { Loader2, Send, Sparkles, X } from 'lucide-react'
+import { Loader2, Send, X } from 'lucide-react'
 
 interface ChatBotProps {
   isOpen: boolean
@@ -21,7 +21,7 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const controls = useAnimation()
+  // const controls = useAnimation()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })

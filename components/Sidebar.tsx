@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import SidebarContent from './SidebarContent'
-import styles from '@/styles/Sidebar.module.css'
-import { Bars3Icon } from '@heroicons/react/24/solid'
+// import styles from '@/styles/Sidebar.module.css'
+// import { Bars3Icon } from '@heroicons/react/24/solid'
 
 export default function Sidebar() {
   const { isExpanded, setExpanded } = useSidebar()

@@ -1,18 +1,17 @@
-import { Fragment } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import {
-  FolderIcon,
+  ArrowTopRightOnSquareIcon,
+  ArrowUpTrayIcon,
+  ChevronRightIcon,
   DocumentIcon,
-  VideoCameraIcon,
+  FolderIcon,
+  GlobeAltIcon,
+  InboxIcon,
   PresentationChartBarIcon,
   TableCellsIcon,
-  GlobeAltIcon,
-  ArrowUpTrayIcon,
-  InboxIcon,
-  ArrowTopRightOnSquareIcon,
-  ChevronRightIcon,
+  VideoCameraIcon,
 } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Fragment, useState } from 'react'
 import SubMenu from './SubMenu'
 
 interface CreateMenuProps {
@@ -22,15 +21,15 @@ interface CreateMenuProps {
 }
 
 interface MenuItem {
-  label: string;
-  icon?: any; // Or a more specific type if possible
-  href?: string;
-  hasSubmenu?: boolean;
+  label: string
+  icon?: React.ComponentType<{ className?: string }>
+  href?: string
+  hasSubmenu?: boolean
 }
 
 interface MenuSection {
-  section: string;
-  items: MenuItem[];
+  section: string
+  items: MenuItem[]
 }
 
 const menuItems: MenuSection[] = [
@@ -69,13 +68,13 @@ export default function CreateMenu({
     position: { top: number; left: number }
   } | null>(null)
 
-  const handleItemClick = (item: any) => {
+  const handleItemClick = (item: MenuItem) => {
     if (!item.hasSubmenu) {
       onClose()
     }
   }
 
-  const handleMouseEnter = (e: React.MouseEvent, item: any) => {
+  const handleMouseEnter = (e: React.MouseEvent, item: MenuItem) => {
     if (item.hasSubmenu) {
       const rect = e.currentTarget.getBoundingClientRect()
       setActiveSubmenu({
@@ -90,7 +89,7 @@ export default function CreateMenu({
     }
   }
 
-  const handleSubMenuSelect = (item: { label: string; icon: any }) => {
+  const handleSubMenuSelect = (item: MenuItem) => {
     if (item.label !== 'Automated folder') {
       setActiveSubmenu(null)
       onClose()
@@ -145,7 +144,9 @@ export default function CreateMenu({
                         }
                         className="w-full px-4 py-2 flex items-center gap-3 hover:bg-gray-50 group relative"
                       >
-                        <item.icon className="h-5 w-5 text-gray-400 group-hover:text-gray-600" />
+                        {item.icon && (
+                          <item.icon className="h-5 w-5 text-gray-400 group-hover:text-gray-600" />
+                        )}
                         <span className="flex-1 text-sm text-gray-700 text-left">
                           {item.label}
                         </span>
