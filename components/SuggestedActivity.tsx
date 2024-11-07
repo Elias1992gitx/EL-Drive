@@ -8,7 +8,7 @@ export default function SuggestedActivity() {
   const isMobile = useMediaQuery('(max-width: 640px)')
   
   return (
-    <div className="px-4 py-4 sm:py-6">
+    <div className="mobile-safe-area py-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -21,18 +21,20 @@ export default function SuggestedActivity() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="responsive-grid">
           <ActivityCard
             icon={FolderIcon}
             iconColor="text-blue-400"
-            title="ASMobbi... Folder"
+            title="ASMobbi..."
             subtitle="Folder • ASMobbin"
+            className="min-w-[140px]"
           />
           <ActivityCard
             icon={DocumentIcon}
             iconColor="text-gray-400"
             title="PDF File"
             subtitle="PDF • ASMobbin Team Folder"
+            className="min-w-[140px]"
           />
         </div>
       </motion.div>
@@ -45,15 +47,16 @@ interface ActivityCardProps {
   iconColor: string
   title: string
   subtitle: string
+  className?: string
 }
 
-function ActivityCard({ icon: Icon, iconColor, title, subtitle }: ActivityCardProps) {
+function ActivityCard({ icon: Icon, iconColor, title, subtitle, className }: ActivityCardProps) {
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className="p-4 rounded-lg border border-gray-200 bg-white hover:shadow-sm 
-                 transition-all duration-200 cursor-pointer"
+      className={`p-4 rounded-lg border border-gray-200 bg-white hover:shadow-sm 
+                 transition-all duration-200 cursor-pointer ${className}`}
     >
       <div className="mb-3">
         <Icon className={`h-10 w-10 sm:h-12 sm:w-12 ${iconColor}`} />

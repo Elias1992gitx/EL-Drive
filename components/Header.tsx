@@ -106,7 +106,7 @@ export default function Header() {
 
               <button 
                 onClick={() => setIsInviteOpen(true)}
-                className="hidden md:flex items-center gap-2 bg-black text-sm text-white hover:text-white 
+                className="hidden md:flex items-center gap-2 bg-black text-sm text-white hover:text-white-900 
                          px-3 py-2 rounded-lg hover:bg-gray-800 whitespace-nowrap border border-gray-200"
               >
                 <UserPlusIcon className="h-4 w-4" />

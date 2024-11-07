@@ -57,81 +57,84 @@ export default function ActionButtons() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 px-4 py-4 sm:py-6 border-b border-gray-100 overflow-x-hidden">
-        <button
-          ref={createButtonRef}
-          onClick={() => setIsCreateMenuOpen(true)}
-          className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[21px] bg-black text-white rounded-lg text-sm font-medium 
-          flex items-center justify-center gap-2 shadow-sm border border-transparent whitespace-nowrap"
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 
+           mobile-safe-area py-3 sm:py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <button
+            ref={createButtonRef}
+            onClick={() => setIsCreateMenuOpen(true)}
+            className="touch-target flex-1 sm:flex-none px-3 sm:px-4 py-2 bg-black text-white 
+                     rounded-lg text-sm font-medium flex items-center justify-center gap-2"
+          >
+            <PlusIcon className="h-4 w-4" />
+            <span className="sm:hidden lg:inline">Create</span>
+          </button>
+
+          <button
+            onClick={() => setIsUploadDialogOpen(true)}
+            className="touch-target flex-1 sm:flex-none px-3 sm:px-4 py-2 border border-gray-200 
+                     rounded-lg text-sm font-medium flex items-center justify-center gap-2"
+          >
+            <ArrowUpTrayIcon className="h-4 w-4" />
+            <span className="sm:hidden lg:inline">Upload</span>
+          </button>
+        </div>
+      </div>
+
+      <CreateMenu
+        isOpen={isCreateMenuOpen}
+        onClose={() => setIsCreateMenuOpen(false)}
+        anchorEl={createButtonRef.current}
+      />
+
+      <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => setIsCreateFolderOpen(true)}
+          className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[21px] border border-gray-200 rounded-lg 
+          text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
         >
-          <PlusIcon className="h-4 w-4" />
-          Create
+          <FolderPlusIcon className="h-4 w-4" />
+          <span className="text-sm">New Folder</span>
+        </motion.button>
+
+        <button
+          onClick={() => setIsEditPDFOpen(true)}
+          className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[22px] border border-gray-200 rounded-lg 
+          text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
+        >
+          <DocumentTextIcon className="h-4 w-4" />
+          <span className="text-sm">Edit PDF</span>
         </button>
 
-        <CreateMenu
-          isOpen={isCreateMenuOpen}
-          onClose={() => setIsCreateMenuOpen(false)}
-          anchorEl={createButtonRef.current}
+        <EditPDFDialog
+          isOpen={isEditPDFOpen}
+          onClose={() => setIsEditPDFOpen(false)}
         />
 
         <button
-          onClick={() => setIsUploadDialogOpen(true)}
-          className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[21px] border-2 border-dashed border-gray-300 rounded-lg 
-          text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+          onClick={() => setIsGetSignatureOpen(true)}
+          className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[22px] border border-gray-200 rounded-lg 
+          text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
         >
-          <ArrowUpTrayIcon className="h-4 w-4" />
-          <span className="text-sm">Upload</span>
+          <PencilSquareIcon className="h-4 w-4" />
+          <span className="text-sm">Get signatures</span>
         </button>
 
-        <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setIsCreateFolderOpen(true)}
-            className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[21px] border border-gray-200 rounded-lg 
-            text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <FolderPlusIcon className="h-4 w-4" />
-            <span className="text-sm">New Folder</span>
-          </motion.button>
+        <GetSignatureDialog
+          isOpen={isGetSignatureOpen}
+          onClose={() => setIsGetSignatureOpen(false)}
+        />
 
-          <button
-            onClick={() => setIsEditPDFOpen(true)}
-            className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[22px] border border-gray-200 rounded-lg 
-            text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <DocumentTextIcon className="h-4 w-4" />
-            <span className="text-sm">Edit PDF</span>
-          </button>
-
-          <EditPDFDialog
-            isOpen={isEditPDFOpen}
-            onClose={() => setIsEditPDFOpen(false)}
-          />
-
-          <button
-            onClick={() => setIsGetSignatureOpen(true)}
-            className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[22px] border border-gray-200 rounded-lg 
-            text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <PencilSquareIcon className="h-4 w-4" />
-            <span className="text-sm">Get signatures</span>
-          </button>
-
-          <GetSignatureDialog
-            isOpen={isGetSignatureOpen}
-            onClose={() => setIsGetSignatureOpen(false)}
-          />
-
-          <button
-            onClick={() => setIsSignYourselfOpen(true)}
-            className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[22px] border border-gray-200 rounded-lg 
-            text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
-          >
-            <UserIcon className="h-4 w-4" />
-            <span className="text-sm">Sign yourself</span>
-          </button>
-        </div>
+        <button
+          onClick={() => setIsSignYourselfOpen(true)}
+          className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-[22px] border border-gray-200 rounded-lg 
+          text-sm font-medium text-gray-600 flex items-center justify-center gap-2 hover:bg-gray-50"
+        >
+          <UserIcon className="h-4 w-4" />
+          <span className="text-sm">Sign yourself</span>
+        </button>
       </div>
 
       {/* Upload Dialog */}

@@ -28,7 +28,13 @@ export default function SidebarContent({ isMobile }: SidebarContentProps) {
       {/* Logo and Toggle Button */}
       <div className="flex items-center justify-between p-4 border-b border-gray-100">
         <div className="flex items-center gap-2">
-          {/* Toggle Button */}
+          {/* Toggle Button - Always visible */}
+
+          {/* Logo */}
+          {isExpanded && (
+            <img src="/ELST.svg" alt="ELST Logo" className="h-12 w-auto" />
+          )}
+
           <button
             onClick={toggleSidebar}
             className="p-2 rounded-lg hover:bg-gray-50 transition"
@@ -36,11 +42,6 @@ export default function SidebarContent({ isMobile }: SidebarContentProps) {
           >
             <Bars3Icon className="h-5 w-5 text-gray-500" />
           </button>
-          
-          {/* Logo - Only show when expanded and not mobile */}
-          {isExpanded && !isMobile && (
-            <img src="/ELST.svg" alt="ELST Logo" className="h-12 w-auto" />
-          )}
         </div>
 
         {/* Close Button (only for mobile) */}
