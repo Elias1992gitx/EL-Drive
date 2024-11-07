@@ -92,55 +92,29 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
           transition={{ duration: 0.2, ease: 'easeOut' }}
           className={cn(
             'fixed z-50 overflow-hidden border border-gray-100',
-            'sm:bottom-24 bottom-0 right-0 w-full h-[100dvh]',
-            'sm:w-[400px] sm:h-[450px] sm:right-8 sm:rounded-2xl',
+            'bottom-0 right-0 w-[85%] h-[85vh]',
+            'sm:w-[400px] sm:h-[450px]',
+            'sm:bottom-24 sm:right-8 sm:rounded-2xl',
             'bg-gradient-to-b from-white to-gray-50',
-            'shadow-[0_0_50px_0_rgba(0,0,0,0.1)]'
+            'shadow-[0_0_50px_0_rgba(0,0,0,0.1)]',
+            'mx-auto'
           )}
         >
           {/* Header */}
-          <motion.div 
-            className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 py-3 px-6"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 360],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <Sparkles className="h-5 w-5 text-yellow-300" />
-                </motion.div>
-                <div className="flex items-center gap-3">
-                  <h3 className="font-semibold text-sm text-white">EL Drive AI Assistant</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                    <span className="text-xs text-white/80">Online</span>
-                  </div>
-                </div>
+          <div className="p-3 sm:p-4 bg-gradient-to-r from-blue-600 to-indigo-600">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm text-white font-medium">AI Assistant</h3>
+                <span className="text-xs text-white/80">Online</span>
               </div>
-              <motion.button
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={onClose}
-                className="p-1.5 rounded-full hover:bg-white/10 transition-colors"
-              >
+              <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full">
                 <X className="h-4 w-4 text-white" />
-              </motion.button>
+              </button>
             </div>
-          </motion.div>
+          </div>
 
           {/* Messages */}
-          <div className="h-[calc(100%-8rem)] overflow-y-auto px-6 py-4 space-y-6 scroll-smooth">
+          <div className="h-[calc(100%-8rem)] overflow-y-auto p-3 sm:p-4 space-y-4">
             {messages.map((message, index) => (
               <motion.div
                 initial={{ opacity: 0, x: message.role === 'assistant' ? -20 : 20 }}
@@ -186,7 +160,7 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
             onSubmit={handleSubmit}
-            className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-gray-100"
+            className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-white border-t"
           >
             <div className="flex gap-3 items-center">
               <input

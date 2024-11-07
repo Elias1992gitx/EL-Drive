@@ -98,7 +98,7 @@ export default function SignYourselfDialog({
           onClose={onClose}
           className="fixed inset-0 z-50 overflow-y-auto"
         >
-          <div className="fixed inset-0 flex items-center justify-center p-4">
+          <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -111,19 +111,19 @@ export default function SignYourselfDialog({
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative bg-white rounded-xl shadow-2xl w-[500px] overflow-hidden"
+              className="relative bg-white rounded-xl shadow-2xl w-[85%] sm:w-[500px] max-w-lg overflow-hidden"
             >
-              {/* Header */}
-              <div className="p-6 border-b border-gray-100">
-                <div className="flex items-center gap-3">
+              {/* Header - Reduced padding on mobile */}
+              <div className="p-4 sm:p-6 border-b border-gray-100">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <motion.div
                     initial={{ rotate: -15, scale: 0.8 }}
                     animate={{ rotate: 0, scale: 1 }}
                     transition={{ type: 'spring' }}
                   >
-                    <UserIcon className="h-6 w-6 text-blue-500" />
+                    <UserIcon className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
                   </motion.div>
-                  <Dialog.Title className="text-xl font-semibold text-gray-900">
+                  <Dialog.Title className="text-lg sm:text-xl font-semibold text-gray-900">
                     Sign Yourself
                   </Dialog.Title>
                 </div>
@@ -135,13 +135,13 @@ export default function SignYourselfDialog({
                 </button>
               </div>
 
-              {/* Drawing Area */}
-              <div className="p-6">
-                <div className="bg-gray-50 rounded-xl p-4 mb-4">
+              {/* Drawing Area - Adjusted padding */}
+              <div className="p-3 sm:p-6">
+                <div className="bg-gray-50 rounded-xl p-2 sm:p-4 mb-4">
                   <canvas
                     ref={canvasRef}
-                    width={400}
-                    height={200}
+                    width={300}
+                    height={150}
                     onMouseDown={handleStartDrawing}
                     onMouseMove={handleDraw}
                     onMouseUp={handleStopDrawing}
@@ -150,16 +150,16 @@ export default function SignYourselfDialog({
                   />
                 </div>
 
-                {/* Color Picker */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex gap-2">
+                {/* Color Picker - Adjusted sizes */}
+                <div className="flex items-center justify-between mb-4 sm:mb-6">
+                  <div className="flex gap-1 sm:gap-2">
                     {colors.map((color) => (
                       <motion.button
                         key={color}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setActiveColor(color)}
-                        className={`w-8 h-8 rounded-full ${
+                        className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full ${
                           activeColor === color
                             ? 'ring-2 ring-offset-2 ring-blue-500'
                             : ''
@@ -179,8 +179,8 @@ export default function SignYourselfDialog({
                 </div>
               </div>
 
-              {/* Footer */}
-              <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+              {/* Footer - Adjusted padding */}
+              <div className="px-4 py-3 sm:px-6 sm:py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-2 sm:gap-3">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

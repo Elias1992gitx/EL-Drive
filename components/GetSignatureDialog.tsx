@@ -77,7 +77,7 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
           onClose={onClose}
           className="fixed inset-0 z-50 overflow-y-auto"
         >
-          <div className="fixed inset-0 flex items-center justify-center p-4">
+          <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -90,11 +90,11 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative bg-white rounded-xl shadow-2xl w-[500px] overflow-hidden"
+              className="relative bg-white rounded-xl shadow-2xl w-[85%] sm:w-[500px] max-w-lg overflow-hidden"
             >
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <Dialog.Title className="text-xl font-semibold text-gray-900">
+              <div className="p-3 sm:p-6">
+                <div className="flex items-center justify-between mb-4 sm:mb-6">
+                  <Dialog.Title className="text-lg sm:text-xl font-semibold text-gray-900">
                     Set Signature
                   </Dialog.Title>
                   <button
@@ -106,7 +106,7 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
                 </div>
 
                 {/* Tabs */}
-                <div className="flex gap-2 mb-6">
+                <div className="flex gap-1 sm:gap-2 mb-4 sm:mb-6">
                   {[
                     { id: 'draw', label: 'Draw', icon: PencilSquareIcon },
                     { id: 'upload', label: 'Upload', icon: ArrowUpTrayIcon },
@@ -117,24 +117,24 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => setActiveTab(tab.id as any)}
-                      className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-2
+                      className={`flex-1 py-2 px-1 sm:px-2 rounded-lg flex items-center justify-center gap-1 sm:gap-2 text-sm
                         ${activeTab === tab.id 
                           ? 'bg-blue-50 text-blue-500 font-medium' 
                           : 'text-gray-600 hover:bg-gray-50'
                         }`}
                     >
                       <tab.icon className="h-4 w-4" />
-                      {tab.label}
+                      <span className="hidden sm:inline">{tab.label}</span>
                     </motion.button>
                   ))}
                 </div>
 
                 {/* Drawing Canvas */}
-                <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                <div className="bg-gray-50 rounded-xl p-2 sm:p-4 mb-3 sm:mb-4">
                   <canvas
                     ref={canvasRef}
-                    width={400}
-                    height={200}
+                    width={300}
+                    height={150}
                     onMouseDown={handleStartDrawing}
                     onMouseUp={handleStopDrawing}
                     onMouseOut={handleStopDrawing}
@@ -144,7 +144,7 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
                 </div>
 
                 {/* Color Picker */}
-                <div className="flex items-center gap-2 mb-6">
+                <div className="flex items-center gap-1 sm:gap-2 mb-4 sm:mb-6">
                   {['#000000', '#2563eb', '#dc2626'].map((color) => (
                     <motion.button
                       key={color}
@@ -166,7 +166,7 @@ export default function GetSignatureDialog({ isOpen, onClose }: GetSignatureDial
                 </div>
 
                 {/* Footer */}
-                <div className="flex justify-end gap-3">
+                <div className="flex justify-end gap-2 sm:gap-3">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
