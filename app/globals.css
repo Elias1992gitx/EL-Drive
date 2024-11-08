@@ -222,6 +222,12 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 @supports(padding: max(0px)) {
@@ -265,5 +271,27 @@
     @apply shadow-lg rounded-2xl border border-gray-200/50
            dark:border-gray-700/50 overflow-hidden
            backdrop-blur-sm;
+  }
+}
+
+@layer utilities {
+  .safe-area-inset-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  }
+  
+  .chat-height-mobile {
+    height: calc(100vh - 16rem);
+  }
+  
+  .chat-height-desktop {
+    height: calc(100vh - 8rem);
+  }
+}
+
+@layer utilities {
+  .sidebar-transition {
+    transition-property: margin, width;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

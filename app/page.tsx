@@ -30,14 +30,15 @@ export default function Home() {
 
   return (
     <ClientOnly>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 overflow-x-hidden">
         <Header />
-        <div className="flex">
+        <div className="flex relative">
           <Sidebar />
-          <main
-            className={`flex-1 min-w-0 transition-all duration-300 ease-out pt-14
-              ${isExpanded ? 'ml-56' : 'ml-10'}`}
-          >
+          <main className={cn(
+            "flex-1 min-w-0 transition-all duration-300",
+            "pt-14 pb-20 sm:pb-0", // Account for mobile navigation
+            isExpanded ? "lg:ml-[240px]" : "lg:ml-0"
+          )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <ActionButtons />
               <SuggestedActivity />

@@ -11,7 +11,6 @@ export default function Sidebar() {
   const isDesktop = useBreakpoint('lg')
   const pathname = usePathname()
 
-  // Auto-toggle sidebar based on screen width
   useEffect(() => {
     if (window.innerWidth < 640) {
       setExpanded(false)
@@ -22,7 +21,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Overlay */}
       <AnimatePresence>
         {!isDesktop && isExpanded && (
           <motion.div
@@ -39,21 +37,30 @@ export default function Sidebar() {
         )}
       </AnimatePresence>
 
-      {/* Sidebar Component */}
       <motion.aside
+        initial={false}
+        animate={{ 
+          width: isExpanded ? 240 : 0,
+          transition: { duration: 0.3, ease: 'easeInOut' }
+        }}
         className={cn(
-          'fixed left-0 top-0 bottom-0 z-50',
-          'w-[280px] sm:w-[240px]',
+          'fixed left-0 top-0 bottom-0 z-[60]',
           'bg-white dark:bg-gray-900',
-          'transform transition-all duration-300',
-          'lg:translate-x-0',
-          isExpanded ? 'translate-x-0' : '-translate-x-full',
+          'transform transition-transform duration-300',
           'border-r border-gray-200/50 dark:border-gray-700/50',
-          'flex flex-col',
-          'safe-area-inset-left'
+          'overflow-hidden',
+          isExpanded ? 'w-[240px]' : 'w-0',
+          'lg:block'
         )}
       >
-        <SidebarContent isMobile={!isDesktop} />
+        <div className={cn(
+          'w-[240px]',
+          'h-full',
+          'transition-transform duration-300',
+          isExpanded ? 'translate-x-0' : '-translate-x-full'
+        )}>
+          <SidebarContent isMobile={!isDesktop} />
+        </div>
       </motion.aside>
     </>
   )

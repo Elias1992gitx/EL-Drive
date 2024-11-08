@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
-import { MagnifyingGlassIcon, Bars3Icon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, Bars3Icon, UserCircleIcon, Cog6ToothIcon, ArrowRightOnRectangleIcon, UserPlusIcon } from '@heroicons/react/24/outline'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSidebar } from '@/contexts/SidebarContext'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+import { Menu, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
+import InviteMemberDialog from './InviteMemberDialog'
 
 // Add SearchBar component
 function SearchBar() {
@@ -81,41 +84,96 @@ export default function Header() {
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex h-14 sm:h-16 items-center justify-between gap-4">
             {/* Left Section */}
-            <div className="flex items-center gap-3">
-              <button 
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Toggle Button - Always visible */}
+              <button
                 onClick={toggleSidebar}
-                className="touch-target lg:hidden"
+                className="p-1.5 hover:bg-gray-50 rounded-lg"
               >
-                <Bars3Icon className="h-6 w-6" />
+                <Bars3Icon className="h-6 w-6 text-gray-600" />
               </button>
+
+              {/* Desktop Only: Logo */}
               <Image 
                 src="/ELST.svg" 
                 alt="Logo"
                 width={32} 
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto hidden sm:block"
                 priority
               />
             </div>
 
-            {/* Search - Responsive */}
+            {/* Search - Desktop */}
             <div className="flex-1 max-w-2xl mx-auto hidden sm:block">
               <SearchBar />
             </div>
 
-            {/* Mobile Search Trigger */}
-            <button 
-              onClick={toggleMobileSearch}
-              className="sm:hidden"
-            >
-              <MagnifyingGlassIcon className="h-6 w-6" />
-            </button>
+            {/* Right Section - Mobile & Desktop */}
+            <div className="flex items-center gap-2">
+              {/* Mobile Icons */}
+              <div className="flex items-center gap-2 sm:hidden">
+                <button 
+                  onClick={toggleMobileSearch}
+                  className="p-1.5 hover:bg-gray-50 rounded-lg"
+                >
+                  <MagnifyingGlassIcon className="h-6 w-6 text-gray-600" />
+                </button>
+
+                <button
+                  onClick={() => setIsInviteOpen(true)}
+                  className="p-1.5 hover:bg-gray-50 rounded-lg"
+                >
+                  <UserPlusIcon className="h-6 w-6 text-gray-600" />
+                </button>
+
+                <Menu as="div" className="relative">
+                  <Menu.Button className="flex items-center p-1.5 hover:bg-gray-50 rounded-lg">
+                    {user?.imageUrl ? (
+                      <Image
+                        src={user.imageUrl}
+                        alt="Profile"
+                        width={32}
+                        height={32}
+                        className="h-8 w-8 rounded-full"
+                      />
+                    ) : (
+                      <UserCircleIcon className="h-8 w-8 text-gray-400" />
+                    )}
+                  </Menu.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      {/* ... existing menu items ... */}
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              </div>
+
+              {/* Desktop Only Icons */}
+              <div className="hidden sm:flex items-center gap-2">
+                {/* ... existing desktop buttons ... */}
+              </div>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Mobile Search Overlay */}
       <MobileSearch />
+
+      {/* Add InviteMemberDialog */}
+      <InviteMemberDialog
+        isOpen={isInviteOpen}
+        onClose={() => setIsInviteOpen(false)}
+      />
     </>
   )
 } 
