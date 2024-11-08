@@ -3,7 +3,6 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
-import { usePathname } from 'next/navigation'
 import { SidebarProvider } from '@/contexts/SidebarContext'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -13,23 +12,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const pathname = usePathname()
-  const isAuthPage = pathname?.startsWith('/sign-')
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <ClerkProvider>
           <SidebarProvider>
-            {isAuthPage ? (
-              <div className="min-h-screen grid place-items-center">
-                <div className="w-full max-w-md p-4 place-items-center">
-                  {children}
-                </div>
-              </div>
-            ) : (
-              children
-            )}
+            {children}
           </SidebarProvider>
         </ClerkProvider>
       </body>

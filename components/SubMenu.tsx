@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import AutomatedFolderDialog from './AutomatedFolderDialog'
+import {useResponsive} from '../hooks/useResponsive'
 
 interface MenuItem {
   icon: React.ComponentType<{ className?: string }>
@@ -50,6 +51,7 @@ const subMenuItems: Record<SubMenuProps['type'], MenuItem[]> = {
 export default function SubMenu({ type, position, onSelect }: SubMenuProps) {
   const items = subMenuItems[type] || []
   const [isAutomatedFolderDialogOpen, setIsAutomatedFolderDialogOpen] = useState(false)
+  const { isMobile } = useResponsive()
   
   const handleItemClick = (item: MenuItem) => {
     if (item.label === 'Automated folder') {
@@ -67,10 +69,14 @@ export default function SubMenu({ type, position, onSelect }: SubMenuProps) {
         exit={{ opacity: 0, x: -10 }}
         style={{
           position: 'fixed',
-          top: Math.min(position.top - 8, window.innerHeight - 320),
-          left: position.left - 2,
+          top: isMobile ? position.top : Math.min(position.top - 8, window.innerHeight - 320),
+          left: isMobile ? 'auto' : position.left - 2,
+          right: isMobile ? 0 : 'auto',
+          width: isMobile ? '100%' : '16rem',
+          maxWidth: isMobile ? 'calc(100vw - 1rem)' : 'none',
+          margin: isMobile ? '0 0.5rem' : 0,
         }}
-        className="w-64 bg-white rounded-r-lg shadow-xl border-t border-r border-b border-gray-200 py-2 z-50"
+        className="bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
       >
         {items.map((item) => (
           <motion.button
