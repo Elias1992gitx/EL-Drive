@@ -14,6 +14,9 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
+      screens: {
+        xs: '475px',
+      },
       animation: {
         gradient: 'gradient 8s linear infinite',
         aurora: 'aurora 60s linear infinite',

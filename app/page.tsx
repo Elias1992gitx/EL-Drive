@@ -13,6 +13,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
+import { cn } from '@/lib/utils'
 
 export default function Home() {
   const { isSignedIn, isLoaded } = useAuth()
@@ -48,7 +49,13 @@ export default function Home() {
         {/* Chat Button */}
         <button
           onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-4 right-4 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
+          className={cn(
+            'fixed p-4 bg-blue-600 text-white rounded-full shadow-lg',
+            'hover:bg-blue-700 transition-all duration-200',
+            'z-50 flex items-center gap-2',
+            'bottom-20 right-4', // Mobile positioning
+            'sm:bottom-8 sm:right-8' // Desktop positioning
+          )}
         >
           <ChatBubbleLeftIcon className="h-6 w-6" />
         </button>

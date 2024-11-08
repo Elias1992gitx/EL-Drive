@@ -18,6 +18,7 @@ import CreateFolderDialog from './CreateFolderDialog'
 import EditPDFDialog from './EditPDFDialog'
 import GetSignatureDialog from './GetSignatureDialog'
 import SignYourselfDialog from './SignYourselfDialog'
+import { cn } from '@/lib/utils'
 
 export default function ActionButtons() {
   const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false)
@@ -57,11 +58,21 @@ export default function ActionButtons() {
 
   return (
     <>
-      <div className="flex items-center gap-3 px-4 py-6 border-b border-gray-100">
+      <div className={cn(
+        "flex gap-3 px-4 py-6 border-b border-gray-100",
+        "flex-col sm:flex-row",
+        "items-stretch sm:items-center"
+      )}>
         <button 
           ref={createButtonRef}
           onClick={() => setIsCreateMenuOpen(true)}
-          className="px-6 py-[21px] bg-black text-white rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm border border-transparent whitespace-nowrap"
+          className={cn(
+            "px-4 py-3 sm:px-6 sm:py-[21px]",
+            "bg-black text-white rounded-lg",
+            "text-sm font-medium flex items-center justify-center gap-2",
+            "shadow-sm border border-transparent",
+            "w-full sm:w-auto"
+          )}
         >
           <PlusIcon className="h-4 w-4" />
           Create
@@ -75,7 +86,13 @@ export default function ActionButtons() {
         
         <button 
           onClick={() => setIsUploadDialogOpen(true)}
-          className="px-6 py-[21px] border-2 border-dashed border-gray-300 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+          className={cn(
+            "px-4 py-3 sm:px-6 sm:py-[21px]",
+            "border-2 border-dashed border-gray-300 rounded-lg",
+            "text-sm font-medium flex items-center justify-center gap-2",
+            "hover:bg-gray-50",
+            "w-full sm:w-auto"
+          )}
         >
           <ArrowUpTrayIcon className="h-4 w-4" />
           Upload or drop
@@ -83,7 +100,13 @@ export default function ActionButtons() {
         
         <button 
           onClick={() => setIsCreateFolderOpen(true)}
-          className="px-6 py-[21px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+          className={cn(
+            "px-4 py-3 sm:px-6 sm:py-[21px]",
+            "border border-gray-200 rounded-lg",
+            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "hover:bg-gray-50",
+            "w-full sm:w-auto"
+          )}
         >
           <FolderPlusIcon className="h-4 w-4" />
           Create folder
@@ -96,7 +119,13 @@ export default function ActionButtons() {
         
         <button 
           onClick={() => setIsEditPDFOpen(true)}
-          className="px-6 py-[22px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+          className={cn(
+            "px-4 py-3 sm:px-6 sm:py-[22px]",
+            "border border-gray-200 rounded-lg",
+            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "hover:bg-gray-50",
+            "w-full sm:w-auto"
+          )}
         >
           <DocumentTextIcon className="h-4 w-4" />
           Edit PDF
@@ -109,7 +138,13 @@ export default function ActionButtons() {
         
         <button 
           onClick={() => setIsGetSignatureOpen(true)}
-          className="px-6 py-[22px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+          className={cn(
+            "px-4 py-3 sm:px-6 sm:py-[22px]",
+            "border border-gray-200 rounded-lg",
+            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "hover:bg-gray-50",
+            "w-full sm:w-auto"
+          )}
         >
           <PencilSquareIcon className="h-4 w-4" />
           Get signatures
@@ -122,7 +157,13 @@ export default function ActionButtons() {
         
         <button 
           onClick={() => setIsSignYourselfOpen(true)}
-          className="px-6 py-[22px] border border-gray-200 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-50 whitespace-nowrap"
+          className={cn(
+            "px-4 py-3 sm:px-6 sm:py-[22px]",
+            "border border-gray-200 rounded-lg",
+            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "hover:bg-gray-50",
+            "w-full sm:w-auto"
+          )}
         >
           <UserIcon className="h-4 w-4" />
           Sign yourself

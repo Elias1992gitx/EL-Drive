@@ -90,13 +90,16 @@ export default function ChatBot({ isOpen, onClose }: ChatBotProps) {
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
           className={cn(
-            'fixed z-50 overflow-hidden border border-gray-100',
-            'bottom-0 right-0 w-[85%] h-[85vh]',
-            'sm:w-[400px] sm:h-[450px]',
-            'sm:bottom-24 sm:right-8 sm:rounded-2xl',
+            'fixed z-50 overflow-hidden border border-gray-100/50',
+            'bottom-20 right-4 w-[95%] h-[80vh]',
+            'sm:bottom-24 sm:right-6 sm:w-[400px] sm:h-[600px]',
+            'md:bottom-28 md:right-8',
+            'lg:bottom-8 lg:right-8 lg:h-[650px]',
+            'rounded-2xl sm:rounded-2xl',
             'bg-gradient-to-b from-white to-gray-50',
             'shadow-[0_0_50px_0_rgba(0,0,0,0.1)]',
-            'mx-auto'
+            'dark:from-gray-900 dark:to-gray-800',
+            'dark:border-gray-700/50'
           )}
         >
           {/* Header */}
