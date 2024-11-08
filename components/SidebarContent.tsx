@@ -31,33 +31,34 @@ export default function SidebarContent({ isMobile }: SidebarContentProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Logo and Toggle Button */}
+      {/* Header with Logo and Toggle */}
       <div className="flex items-center justify-between p-4 border-b border-gray-100">
-        <div className="flex items-center gap-2">
-          {/* Toggle Button - Always visible */}
-
-          {/* Logo */}
+        <div className="flex items-center gap-3">
+          {/* Logo - Only show when expanded */}
           {isExpanded && (
-            <img src="/ELST.svg" alt="ELST Logo" className="h-12 w-auto" />
+            <img src="/ELST.svg" alt="ELST Logo" className="h-8 w-auto" />
           )}
-
-          <button
-            onClick={toggleSidebar}
-            className="p-2 rounded-lg hover:bg-gray-50 transition"
-            aria-label="Toggle sidebar"
-          >
-            <Bars3Icon className="h-5 w-5 text-gray-500" />
-          </button>
         </div>
 
-        {/* Close Button (only for mobile) */}
+        {/* Mobile Close Button */}
         {isMobile && (
           <button
             onClick={toggleSidebar}
-            className="p-2 rounded-lg hover:bg-gray-50 transition"
+            className="p-2 rounded-lg hover:bg-gray-50 transition-colors"
             aria-label="Close sidebar"
           >
-            <XMarkIcon className="h-6 w-6" />
+            <XMarkIcon className="h-5 w-5 text-gray-500" />
+          </button>
+        )}
+
+        {/* Desktop Toggle Button */}
+        {!isMobile && (
+          <button
+            onClick={toggleSidebar}
+            className="p-2 rounded-lg hover:bg-gray-50 transition-colors"
+            aria-label="Toggle sidebar"
+          >
+            <Bars3Icon className="h-5 w-5 text-gray-500" />
           </button>
         )}
       </div>
