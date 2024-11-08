@@ -7,6 +7,7 @@ interface SidebarContentProps {
   isMobile: boolean
 }
 
+
 interface MenuItem {
   label: string;
   icon?: any; // Or a more specific type if possible
