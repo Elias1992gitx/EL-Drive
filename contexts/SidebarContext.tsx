@@ -1,31 +1,35 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 interface SidebarContextType {
   isExpanded: boolean
-  toggleSidebar: () => void
   setExpanded: (value: boolean) => void
+  toggleSidebar: () => void
 }
 
-const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
+const SidebarContext = createContext<SidebarContextType>({
+  isExpanded: true,
+  setExpanded: () => {},
+  toggleSidebar: () => {}
+})
 
-export function SidebarProvider({ children }: { children: ReactNode }) {
-  const [isExpanded, setIsExpanded] = useState(true)
-  
-  const toggleSidebar = () => setIsExpanded(!isExpanded)
+export function SidebarProvider({ children }: { children: React.ReactNode }) {
+  const [isExpanded, setExpanded] = useState(true)
+
+  const toggleSidebar = () => {
+    setExpanded(prev => !prev)
+  }
 
   return (
-    <SidebarContext.Provider value={{ isExpanded, toggleSidebar, setExpanded: setIsExpanded }}>
+    <SidebarContext.Provider value={{ 
+      isExpanded, 
+      setExpanded,
+      toggleSidebar 
+    }}>
       {children}
     </SidebarContext.Provider>
   )
 }
 
-export function useSidebar() {
-  const context = useContext(SidebarContext)
-  if (context === undefined) {
-    throw new Error('useSidebar must be used within a SidebarProvider')
-  }
-  return context
-} 
+export const useSidebar = () => useContext(SidebarContext) 

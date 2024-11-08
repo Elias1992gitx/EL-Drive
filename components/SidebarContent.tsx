@@ -2,11 +2,11 @@ import { XMarkIcon, Bars3Icon, PlusIcon } from '@heroicons/react/24/outline'
 import { useSidebar } from '@/contexts/SidebarContext'
 import { menuItems, quickAccessSection } from '@/types/sidebar'
 import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 
 interface SidebarContentProps {
   isMobile: boolean
 }
-
 
 interface MenuItem {
   label: string;
@@ -32,34 +32,34 @@ export default function SidebarContent({ isMobile }: SidebarContentProps) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header with Logo and Toggle */}
+      {/* Logo and Toggle Button */}
       <div className="flex items-center justify-between p-4 border-b border-gray-100">
-        <div className="flex items-center gap-3">
-          {/* Logo - Only show when expanded */}
+        <div className="flex items-center gap-2">
+          {/* Logo */}
           {isExpanded && (
-            <img src="/ELST.svg" alt="ELST Logo" className="h-8 w-auto" />
+            <img src="/ELST.svg" alt="ELST Logo" className="h-12 w-auto" />
+          )}
+
+          {/* Toggle Button - Only show in desktop */}
+          {!isMobile && (
+            <button
+              onClick={toggleSidebar}
+              className="p-2 rounded-lg hover:bg-gray-50 transition"
+              aria-label="Toggle sidebar"
+            >
+              <Bars3Icon className="h-5 w-5 text-gray-500" />
+            </button>
           )}
         </div>
 
-        {/* Mobile Close Button */}
+        {/* Close Button (only for mobile) */}
         {isMobile && (
           <button
             onClick={toggleSidebar}
-            className="p-2 rounded-lg hover:bg-gray-50 transition-colors"
+            className="p-2 rounded-lg hover:bg-gray-50 transition"
             aria-label="Close sidebar"
           >
-            <XMarkIcon className="h-5 w-5 text-gray-500" />
-          </button>
-        )}
-
-        {/* Desktop Toggle Button */}
-        {!isMobile && (
-          <button
-            onClick={toggleSidebar}
-            className="p-2 rounded-lg hover:bg-gray-50 transition-colors"
-            aria-label="Toggle sidebar"
-          >
-            <Bars3Icon className="h-5 w-5 text-gray-500" />
+            <XMarkIcon className="h-6 w-6" />
           </button>
         )}
       </div>
@@ -73,10 +73,14 @@ export default function SidebarContent({ isMobile }: SidebarContentProps) {
               href={item.href}
               variants={menuItemVariants}
               animate={isExpanded ? 'expanded' : 'collapsed'}
-              className="flex items-center gap-3 px-3 py-1.5 text-sm text-gray-600 rounded-lg hover:bg-gray-50"
+              className="flex items-center gap-3 px-3 py-1.5 text-gray-600 rounded-lg hover:bg-gray-50"
             >
-              <item.icon className="h-4 w-4 shrink-0" />
-              {isExpanded && <span className="truncate">{item.label}</span>}
+              <item.icon className="h-5 w-5 shrink-0" />
+              {isExpanded && (
+                <span className="truncate text-sm">
+                  {item.label}
+                </span>
+              )}
             </motion.a>
           ))}
         </nav>

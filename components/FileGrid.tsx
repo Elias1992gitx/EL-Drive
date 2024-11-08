@@ -22,8 +22,8 @@ export default function FileGrid() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center sm:gap-6">
+          <div className="flex items-center gap-2 hidden sm:flex">
             <h2 className="text-base font-medium">All files</h2>
             <span className="text-gray-400">
               <InformationCircleIcon className="h-4 w-4" />
@@ -59,14 +59,14 @@ export default function FileGrid() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {dummyFiles.map((file) => (
-          <FileCard 
-            key={file.id} 
+          <FileCard
+            key={file.id}
             file={file}
             selected={selectedFiles.includes(file.id)}
             onSelect={() => {
-              setSelectedFiles(prev => 
-                prev.includes(file.id) 
-                  ? prev.filter(id => id !== file.id)
+              setSelectedFiles((prev) =>
+                prev.includes(file.id)
+                  ? prev.filter((id) => id !== file.id)
                   : [...prev, file.id]
               )
             }}

@@ -14,6 +14,7 @@ export interface MenuItem {
   label: string
   href: string
   items?: MenuItem[]
+  hideOnMobile?: boolean
 }
 
 export const menuItems: MenuItem[] = [
@@ -21,6 +22,7 @@ export const menuItems: MenuItem[] = [
     icon: HomeIcon,
     label: 'All Files',
     href: '#',
+    hideOnMobile: true
   },
   {
     icon: DocumentIcon,

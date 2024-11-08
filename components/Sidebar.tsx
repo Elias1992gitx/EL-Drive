@@ -6,7 +6,11 @@ import { useEffect } from 'react'
 import SidebarContent from './SidebarContent'
 import { cn } from '@/lib/utils'
 
-export default function Sidebar() {
+interface SidebarProps {
+  isInviteOpen?: boolean
+}
+
+export default function Sidebar({ isInviteOpen }: SidebarProps) {
   const { isExpanded, setExpanded } = useSidebar()
   const isDesktop = useBreakpoint('lg')
   const pathname = usePathname()
@@ -44,13 +48,14 @@ export default function Sidebar() {
           transition: { duration: 0.3, ease: 'easeInOut' }
         }}
         className={cn(
-          'fixed left-0 top-0 bottom-0 z-[60]',
+          'fixed left-0 top-0 bottom-0 z-[50]',
           'bg-white dark:bg-gray-900',
           'transform transition-transform duration-300',
           'border-r border-gray-200/50 dark:border-gray-700/50',
           'overflow-hidden',
           isExpanded ? 'w-[240px]' : 'w-0',
-          'lg:block'
+          'lg:block',
+          isInviteOpen && 'opacity-50 pointer-events-none backdrop-blur-sm'
         )}
       >
         <div className={cn(

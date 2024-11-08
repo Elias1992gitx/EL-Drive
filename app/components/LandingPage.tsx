@@ -87,7 +87,7 @@ export default function LandingPage() {
                   className="mb-4 sm:mb-6 md:mb-8"
                 >
                   <h3 className="text-xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-4 sm:mb-6 text-gray-900 tracking-tight">
-                    Transform Your Digital
+                    Transform Your Digital {' '}
                     <br className="hidden sm:block" />
                     <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
                       Workspace Experience

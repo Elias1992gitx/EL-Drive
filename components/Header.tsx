@@ -11,16 +11,34 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import InviteMemberDialog from './InviteMemberDialog'
 
-// Add SearchBar component
+// Update the MobileSearch component
+const MobileSearch = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: "auto" }}
+        exit={{ opacity: 0, height: 0 }}
+        className="absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-50"
+      >
+        <div className="p-2 max-w-lg mx-auto">
+          <SearchBar />
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+)
+
+// Update the SearchBar component
 function SearchBar() {
   return (
     <div className="relative">
       <input
         type="text"
-        placeholder="Search files and folders..."
-        className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        placeholder="Search..."
+        className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+      <MagnifyingGlassIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
     </div>
   )
 }
@@ -52,22 +70,6 @@ export default function Header() {
     setIsMobileSearchOpen(!isMobileSearchOpen)
   }
 
-  // Add MobileSearch component here, after state is defined
-  const MobileSearch = () => (
-    <AnimatePresence>
-      {isMobileSearchOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className="absolute top-full left-0 right-0 p-4 bg-white border-b border-gray-200 shadow-lg"
-        >
-          <SearchBar />
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-
   if (!isLoaded) {
     return null
   }
@@ -79,9 +81,13 @@ export default function Header() {
         'bg-white/80 dark:bg-gray-900/80',
         'backdrop-blur-lg',
         'border-b border-gray-200/50 dark:border-gray-700/50',
-        'transition-all duration-300'
+        'transition-all duration-300',
+        isInviteOpen && 'pointer-events-none opacity-50'
       )}>
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className={cn(
+          "px-4 sm:px-6 lg:px-8",
+          isInviteOpen && 'opacity-50'
+        )}>
           <div className="flex h-14 sm:h-16 items-center justify-between gap-4">
             {/* Left Section */}
             <div className="flex items-center gap-2 sm:gap-3">
@@ -150,8 +156,37 @@ export default function Header() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {/* ... existing menu items ... */}
+                    <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[70]">
+                      <div className="py-1">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="/settings"
+                              className={cn(
+                                'flex items-center gap-2 px-4 py-2 text-sm sm:text-base',
+                                active ? 'bg-gray-50' : ''
+                              )}
+                            >
+                              <Cog6ToothIcon className="h-5 w-5" />
+                              Settings
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={() => signOut()}
+                              className={cn(
+                                'flex w-full items-center gap-2 px-4 py-2 text-sm sm:text-base text-red-600',
+                                active ? 'bg-gray-50' : ''
+                              )}
+                            >
+                              <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                              Sign out
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </div>
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -159,21 +194,104 @@ export default function Header() {
 
               {/* Desktop Only Icons */}
               <div className="hidden sm:flex items-center gap-2">
-                {/* ... existing desktop buttons ... */}
+                <button
+                  onClick={() => setIsInviteOpen(true)}
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg"
+                >
+                  <UserPlusIcon className="h-5 w-5" />
+                  <span>Invite</span>
+                </button>
+
+                <Menu as="div" className="relative">
+                  <Menu.Button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
+                    {user?.imageUrl ? (
+                      <Image
+                        src={user.imageUrl}
+                        alt="Profile"
+                        width={32}
+                        height={32}
+                        className="h-8 w-8 rounded-full"
+                      />
+                    ) : (
+                      <UserCircleIcon className="h-8 w-8 text-gray-400" />
+                    )}
+                    <span>Profile</span>
+                  </Menu.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="py-1">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="/settings"
+                              className={cn(
+                                'flex items-center gap-2 px-4 py-2 text-sm',
+                                active ? 'bg-gray-50' : ''
+                              )}
+                            >
+                              <Cog6ToothIcon className="h-5 w-5" />
+                              Settings
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={() => signOut()}
+                              className={cn(
+                                'flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600',
+                                active ? 'bg-gray-50' : ''
+                              )}
+                            >
+                              <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                              Sign out
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile Search Overlay */}
-      <MobileSearch />
+      {/* Add overlay when invite dialog is open */}
+      <AnimatePresence>
+        {isInviteOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Add InviteMemberDialog */}
-      <InviteMemberDialog
-        isOpen={isInviteOpen}
-        onClose={() => setIsInviteOpen(false)}
+      {/* Mobile Search Overlay */}
+      <MobileSearch 
+        isOpen={isMobileSearchOpen} 
+        onClose={() => setIsMobileSearchOpen(false)} 
       />
+
+      {/* Update InviteMemberDialog z-index */}
+      <div className="relative z-50">
+        <InviteMemberDialog
+          isOpen={isInviteOpen}
+          onClose={() => setIsInviteOpen(false)}
+        />
+      </div>
     </>
   )
 } 

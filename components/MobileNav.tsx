@@ -6,7 +6,7 @@ export default function MobileNav() {
       <div className="flex justify-around items-center">
         <button className="flex flex-col items-center gap-1">
           <HomeIcon className="h-6 w-6" />
-          <span className="text-xs">Home</span>
+          <span className="text-[11px] sm:text-xs font-medium">Home</span>
         </button>
         <button className="flex flex-col items-center gap-1">
           <FolderIcon className="h-6 w-6" />

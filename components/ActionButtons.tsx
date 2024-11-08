@@ -69,13 +69,13 @@ export default function ActionButtons() {
           className={cn(
             "px-4 py-3 sm:px-6 sm:py-[21px]",
             "bg-black text-white rounded-lg",
-            "text-sm font-medium flex items-center justify-center gap-2",
+            "text-xs sm:text-sm font-medium flex items-center justify-center gap-2",
             "shadow-sm border border-transparent",
             "w-full sm:w-auto"
           )}
         >
           <PlusIcon className="h-4 w-4" />
-          Create
+          <span>Create</span>
         </button>
         
         <CreateMenu 
@@ -89,13 +89,13 @@ export default function ActionButtons() {
           className={cn(
             "px-4 py-3 sm:px-6 sm:py-[21px]",
             "border-2 border-dashed border-gray-300 rounded-lg",
-            "text-sm font-medium flex items-center justify-center gap-2",
+            "text-xs sm:text-sm font-medium flex items-center justify-center gap-2",
             "hover:bg-gray-50",
             "w-full sm:w-auto"
           )}
         >
           <ArrowUpTrayIcon className="h-4 w-4" />
-          Upload or drop
+          <span>Upload</span>
         </button>
         
         <button 
@@ -103,13 +103,13 @@ export default function ActionButtons() {
           className={cn(
             "px-4 py-3 sm:px-6 sm:py-[21px]",
             "border border-gray-200 rounded-lg",
-            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "text-xs sm:text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
             "hover:bg-gray-50",
             "w-full sm:w-auto"
           )}
         >
           <FolderPlusIcon className="h-4 w-4" />
-          Create folder
+          <span>Folder</span>
         </button>
         
         <CreateFolderDialog 
@@ -122,13 +122,13 @@ export default function ActionButtons() {
           className={cn(
             "px-4 py-3 sm:px-6 sm:py-[22px]",
             "border border-gray-200 rounded-lg",
-            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "text-xs sm:text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
             "hover:bg-gray-50",
             "w-full sm:w-auto"
           )}
         >
           <DocumentTextIcon className="h-4 w-4" />
-          Edit PDF
+          <span>PDF</span>
         </button>
         
         <EditPDFDialog 
@@ -141,13 +141,13 @@ export default function ActionButtons() {
           className={cn(
             "px-4 py-3 sm:px-6 sm:py-[22px]",
             "border border-gray-200 rounded-lg",
-            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "text-xs sm:text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
             "hover:bg-gray-50",
             "w-full sm:w-auto"
           )}
         >
           <PencilSquareIcon className="h-4 w-4" />
-          Get signatures
+          <span>Sign</span>
         </button>
         
         <GetSignatureDialog 
@@ -160,13 +160,13 @@ export default function ActionButtons() {
           className={cn(
             "px-4 py-3 sm:px-6 sm:py-[22px]",
             "border border-gray-200 rounded-lg",
-            "text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
+            "text-xs sm:text-sm font-medium text-gray-600 flex items-center justify-center gap-2",
             "hover:bg-gray-50",
             "w-full sm:w-auto"
           )}
         >
           <UserIcon className="h-4 w-4" />
-          Sign yourself
+          <span>Sign yourself</span>
         </button>
       </div>
 
